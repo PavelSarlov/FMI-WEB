@@ -1,2 +1,3 @@
 # FMI-WEB
-FMI - Web Technologies
+
+Materials, homeworks and stuff during the course.
