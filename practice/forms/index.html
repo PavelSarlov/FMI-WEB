@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <header>
+            <h1>Добавяне на предмет</h1>
+        </header>
+        <main>
+            <form method="post" action="./index.php">
+                <section>
+                    <label for="course-name">Име:</label>
+                    <input id="course-name" name="courseName">
+                </section>
+                <section>
+                    <label for="teacher-name">Преподавател:</label>
+                    <input id="teacher-name" name="teacherName">
+                </section>
+                <section>
+                    <label for="course-group">Тип:</label>
+                    <select id="course-group" name="courseGroup">
+                        <option value="ОКН" selected>ОКН</option>
+                        <option value="Мат">Мат</option>
+                        <option value="ЯКН">ЯКН</option>
+                    </select>
+                </section>
+                <section>
+                    <label for="course-type-mandatory">Задължителен</label>
+                    <input id="course-type-mandatory" type="radio" name="courseType">
+                    <label for="course-type-elective">Избираем</label>
+                    <input id="course-type-elective" type="radio" name="courseType">
+                </section>
+                <section>
+                    <label for="course-description">Описание:</label>
+                    <textarea id="course-description" name="courseDescription"></textarea>
+                </section>
+                <section>
+                    <button type="submit">Добави</button>
+                </section>
+            </form>
+        </main>
+    </body>
+</html>
