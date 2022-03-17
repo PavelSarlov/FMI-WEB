@@ -1,13 +1,11 @@
 body, #form-registration {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     background: rgb(222, 253, 241);
 }
 
 #form-registration {
-    padding: 2.5% 3%;
-    margin: 5vh auto;
+    display: block;
+    padding: 2% 3%;
+    margin: 5% auto;
     width: fit-content;
     height: fit-content;
     min-width: 23em;
@@ -15,19 +13,21 @@ body, #form-registration {
     border: 1px rgb(66, 125, 35) solid;
 }
 
-.form-input, #btn-submit {
+.form-field {
+    display: block;
+    width: 100%;
     border: 2px rgb(195, 205, 192) solid;
-    margin: 0.3em 0;
-    padding: 0.5em;
+    margin: 3% 0;
+    padding: 2%;
     font-size: inherit;
 }
 
-#btn-submit {
+.form-btn {
     background: rgb(207, 231, 217);
     color: rgb(85, 141, 131);
 }
 
-#btn-submit:hover {
+.form-btn:hover {
     background: rgb(85, 141, 61);
     color: rgb(207, 231, 217);
 }
