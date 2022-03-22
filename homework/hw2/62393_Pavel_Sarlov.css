@@ -7,7 +7,6 @@ body, #form-registration {
     padding: 2% 3%;
     margin: 5% auto;
     width: fit-content;
-    height: fit-content;
     min-width: 23em;
     font-size: 1.5vw;
     border: 1px rgb(66, 125, 35) solid;
@@ -16,8 +15,9 @@ body, #form-registration {
 .form-field {
     display: block;
     width: 100%;
+    box-sizing: border-box;
     border: 2px rgb(195, 205, 192) solid;
-    margin: 3% 0;
+    margin: 3% auto;
     padding: 2%;
     font-size: inherit;
 }
