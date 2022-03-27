@@ -17,22 +17,22 @@ window.onload = () => {
 
     function populateTOC() {
         let toc = document.getElementById("toc");
-        const headers = document.querySelectorAll(".header-section");
+        const headers = document.querySelectorAll(".header-article");
 
         for (let header of headers) {
             let field = document.createElement("a");
-            field.href = "#" + header.parentNode.id;
+            field.href = "#" + header.id;
             field.className = "toc-header nav-btn";
             field.innerHTML = header.innerHTML;
             toc.appendChild(field);
 
-            const subheaders = document.querySelectorAll("#" + header.parentNode.id + " header.subheader");
+            const subheaders = document.querySelectorAll("#" + header.id + " ~ section h2.subheader");
             
             for (let subheader of subheaders) {
                 let field = document.createElement("a");
-                field.href = "#" + header.parentNode.id;
+                field.href = "#" + subheader.id;
                 field.className = "toc-subheader nav-btn";
-                field.innerHTML = header.innerHTML;
+                field.innerHTML = subheader.innerHTML;
                 toc.appendChild(field);
             }
         }

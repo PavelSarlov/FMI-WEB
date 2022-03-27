@@ -8,25 +8,45 @@ body, main, footer {
     overflow-y: auto;
 }
 
-section {
-    width: 80%;
+article {
+    width: 60%;
     margin: auto;
+    font-size: 1.1vw;
+    color: #000000;
+    text-align: justify;
 }
 
-.toc-holder {
+li {
+    margin-top: 0.5em;
+}
+
+i {
+    font-weight: bold;
+    margin: auto 0.5em;
+}
+
+.toc-holder, #toc-indicator {
     position: fixed;
     height: fit-content;
     width: fit-content;
     top: 50%;
     left: 0;
-    transform: translateY(-50%) translateX(-95%);
+    transform: translateY(-50%) translateX(-100%);
     z-index: 1;
     font-size: 1vw;
 }
 
-.toc-holder:hover {
+#toc-indicator {
+    transform: translateY(-50%);
+}
+
+#toc-holder:hover > #toc-indicator {
+    visibility: hidden;
+}
+
+#toc-holder:hover > #toc {
     transition: transform 0.3s;
-    transform: translateY(-50%) translateX(0%);
+    transform: translateY(-50%);
 }
 
 .toc-header, .toc-subheader {
@@ -82,22 +102,18 @@ section {
     padding: 1em;
 }
 
-.header-section {
+.header-article {
     display: block;
     font-size: 2vw;
     margin: 1em auto;
     padding: 0.5em;
+    color: #cccccc;
+    text-align: center;
 }
 
 .subheader {
     display: block;
     font-size: 2vw;
     margin: 1em auto;
-}
-
-.article-contents {
-    font-size: 1.1vw;
-    color: #000000;
-    text-align: justify;
 }
 
