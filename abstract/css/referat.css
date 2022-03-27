@@ -1,14 +1,19 @@
-body {
+body, main, footer {
     margin: auto;
-    width: 80%;
-    background: #c3c3c3;
+    width: 100%;
+    background: #dcdcdc;
     font-family: Arial;
     text-align: center;
     color: #cccccc;
     overflow-y: auto;
 }
 
-.nav-holder {
+section {
+    width: 80%;
+    margin: auto;
+}
+
+.toc-holder {
     position: fixed;
     height: fit-content;
     width: fit-content;
@@ -19,28 +24,34 @@ body {
     font-size: 1vw;
 }
 
-.nav-holder:hover {
+.toc-holder:hover {
     transition: transform 0.3s;
     transform: translateY(-50%) translateX(0%);
 }
 
-.nav-btn {
-    display: block;
-    margin: 0.5em 0;
-    padding: 0.5em;
-    background: #999900;
-    border: 0.2em solid #cccccc;
-    border-radius: inherit;
+.toc-header, .toc-subheader {
     font-size: 1vw;
     color: #ffffff;
     text-decoration: none;
     overflow-wrap: break-word;
+    border-bottom: 0.2em solid #cccccc;
+}
+
+.toc-subheader {
+    font-size: 0.8em;
+    margin-left: 1em;
+}
+
+.nav-btn {
+    display: block;
+    padding: 0.5em;
     transition: 0.3s;
+    background: #998811;
 }
 
 .nav-btn:hover {
     background: #ffffff;
-    border: 0.2em solid #000000;
+    border-bottom: 0.2em solid #000000;
     color: #000000;
     cursor: pointer;
 }
@@ -54,27 +65,39 @@ body {
     z-index: 1;
     font-size: 2vw;
     visibility: hidden;
+    border: 0.2em solid;
     border-color: #000000;
     border-radius: 2em;
+    text-decoration: none;
 }
 
 .holder-bg {
     background: #a31155;
 }
 
-.holder-border {
-    border: 0.2em solid #000000;
-    border-radius: 0 1em 1em 0;
-}
-
 .header-title {
     display: block;
-    font-size: 3vw;
+    font-size: 4vw;
     margin: auto;
-    padding: 2em;
+    padding: 1em;
+}
+
+.header-section {
+    display: block;
+    font-size: 2vw;
+    margin: 1em auto;
+    padding: 0.5em;
+}
+
+.subheader {
+    display: block;
+    font-size: 2vw;
+    margin: 1em auto;
 }
 
 .article-contents {
-    font-size: 5vw;
+    font-size: 1.1vw;
     color: #000000;
+    text-align: justify;
 }
+

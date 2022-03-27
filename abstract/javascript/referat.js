@@ -1,5 +1,6 @@
 window.onload = () => {
     document.body.onscroll = handlePageScroll;
+    populateTOC();
 
     function handlePageScroll() {
         if (scrolledFarEnough(0)) {
@@ -8,12 +9,33 @@ window.onload = () => {
         else {
             document.getElementById("to-top-btn").style.visibility = "hidden";
         }
-
-        stickyHeaders();
     }
 
     function scrolledFarEnough(scrollDist) {
         return document.body.scrollTop > scrollDist || document.documentElement.scrollTop > scrollDist;
+    }
+
+    function populateTOC() {
+        let toc = document.getElementById("toc");
+        const headers = document.querySelectorAll(".header-section");
+
+        for (let header of headers) {
+            let field = document.createElement("a");
+            field.href = "#" + header.parentNode.id;
+            field.className = "toc-header nav-btn";
+            field.innerHTML = header.innerHTML;
+            toc.appendChild(field);
+
+            const subheaders = document.querySelectorAll("#" + header.parentNode.id + " header.subheader");
+            
+            for (let subheader of subheaders) {
+                let field = document.createElement("a");
+                field.href = "#" + header.parentNode.id;
+                field.className = "toc-subheader nav-btn";
+                field.innerHTML = header.innerHTML;
+                toc.appendChild(field);
+            }
+        }
     }
 
     // function isInViewPort(element) {
