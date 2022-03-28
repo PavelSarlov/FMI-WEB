@@ -9,43 +9,122 @@
     </head>
     <body>
         <nav>
-            <div id="toc-holder">
+            <div class="toc-container">
+                <div id="toc"></div>
                 <div id="toc-indicator" class="nav-btn">&gt;&gt;</div>
-                <div id="toc" class="toc-holder"></div>
             </div>
-            <a id="to-top-btn" href="#" class="nav-btn"><strong>&#x2B06;</strong></a>
+            <a id="to-top-btn" href="#" class="nav-btn">&#x2B06;</a>
         </nav>
         <main>
-            <header class="header-title holder-bg">
+            <header class="holder-bg">
                 Софтуерни шаблони за поведение (в php)
             </header>
             <article>
-                <h1 id="head1" class="header-article holder-bg">Въведение</h1>
+                <h1 id="intro" class="holder-bg">Въведение</h1>
                 <p>Софтуерните шаблони представляват най-добрите практики, които се използват от опитните обектно-ориентирани софтуерни разработчици. Тези шаблони са решенията на основни проблеми, с които се сблъскват софтуерните разработчици по време на своята работа. Откриването на тези решения е изисквало изключително дълго време, изпълнено с прилагане на метода проба-грешка от не малко разработчици.</p>
                 <section>
-                    <h2 id="head1-sub1" class="subheader">Особености</h2>
+                    <h2 id="characteristics">Особености</h2>
+                    <p>Следните характеристики допълват накратко какво представляват шаблоните <a href="#link1">[1]</a>:</p>
                     <ul>
                         <li>В софтуерното инженерство шаблони са основни решения на често срещани проблеми в даден контекст на софтуерния дизайн.</li>
                         <li>Шаблонът не е завършен дизайн, който може директно да бъде трансформиран в програмен или машинен код. Той е описание или, както идва от самото му название, шаблон за решението на даден проблем в най-различни ситуации, т.е. може да бъде използван многократно.</li>
                         <li>Софтуерните шаблони предоставят решения на всеобщи проблеми, което помага с поддръжката, разширяемостта и "разкачаемостта" на кода.</li>
                         <li>Колкото повече знаем за тях, толкова по-лесно става разрешаването на проблемите, с които се сблъскваме.</li>
-                        <li>Популяризирани са в книгата <a href="https://en.wikipedia.org/wiki/Design_Patterns">Gang Of Four (1994)</a>.</li>
+                        <li>Популяризирани са в книгата <a href="https://en.wikipedia.org/wiki/Design_Patterns" target="_blank">Gang Of Four (1994)</a>.</li>
                     </ul>
+                </section>
+                <section>
+                    <h2 id="pattern-uses" class="subheader">Полза от софтуерните шаблони</h2>
+                    <p>Софтуерните шаблони значително могат да забързат процеса на разработка като предоставят изпробвани и доказани образци. Ефективния софтуерен дизайн изисква разглеждането на проблеми, които може да не станат достатъчно ясни в началния етап от имплементацията. Преизползването на софтуерните шаблони помага с предотвратяването на едва доловими грешки, които могат да доведат до огромни проблеми, както и подобрява четимостта на кода от програмистите и архитектите, запознати с шаблоните.</p>
+                    <p>Често хората са наясно как да прилагат дадени софтуерни дизайн техники за определени проблеми. Тези техники обаче са трудно приложими в по-широк кръг от проблеми. Софтуерните шаблони предоставят основни решения, документирани във формат, който не изисква специфики на даден проблем.</p>
+                    <p>В допълнение, шаблоните позволяват на разработчиците да комуникират, използвайки добре познати, добре разбрани наименования в софтуерните взаимоотношения. Често срещани шаблони могат да претърпят подобрения с течение на времето, които да ги направят по-укрепнали от <i>ad-hoc</i> дизайните.</p>
+                </section>
+                <section>
+                    <h2 id="pattern-types" class="subheader">Видове софтуерни шаблони</h2>
+                    <figure>
+                        <img src="img/pattern-types.png" alt="Design Pattern Types"/>
+                        <figcaption>Фигура 1. Диаграма на видовете софтуерни шаблони. <a href="#link1">[1]</a></figcaption>
+                    </figure>
+                    <p>Софтуерните шаблони се разделят на следните три вида <a href="#link2">[2]</a>:</p>
+                    <ul>
+                        <li>Шаблони за създаване - идеята им се основава на инстанциирането на класове. Този вид може да раздели на шаблони за създаване на класове и шаблони за създаване на обекти. Докато създаващите класове се възползват ефективно от наследяването за инстанцииращия процес, създаващите обекти използват делегация за изпълнение на работата си.</li>
+                        <li>Структурни шаблони - идеята им се основава на композицията на класове и обекти. Класовите шаблони се възползват от наследяване за композиция на интерфейсите. Обектните шаблони дефинират начини за композиция на обектите с цел получаване на нова функционалност.</li>
+                        <li>Шаблони за поведение - идеята им се основава на комуникацията между обектите на класовете. Поведенческите шаблони имат за основна цел да разглеждат комуникацията между различните инстанциирани обекти в една система.</li>
+                    </ul>
+                    <p>В текущия документ ще се спрем само на шаблоните за поведение като ще разгледаме какви видове биват, в какви случаи се използват, както и ще дадем малко примери за имплементацията им в код, написан на <i>php</i>.</p>
                 </section>
             </article>
             <article>
-                <h1 id="head2" class="header-article holder-bg">Какво са шаблоните за поведение?</h1>
+                <h1 id="behavioural-patterns" class="header-article holder-bg">Какво са шаблоните за поведение?</h1>
+                <p>Поведенческите шаблони описват начина, по който обектите и класовете взаимодействат и разпределят отговорностите помежду си. Всеки шаблон абстрахира някакво действие, което програмистите искат даден обект или клас да възприема. Променяйки обекта или класа, можете да промените използвания алгоритъм, засегнатите обекти или поведението и въпреки това да запазите основния интерфейс за клиентските класове.</p>
+                <p>Добър набор от поведенчески шаблони на разположение ще ви позволят да разрешите най-различни предизвикателства от страна на дизайна на една обектно-ориентирана система. Някои сред тях биват номериране на списъци, въздействане на промяна в състоянието на обект, сериализация и десериализация на обекти без пробив в енкапсулацията на данните.</p>
+                <p>Шаблоните за поведение засягат алгоритмите и комуникацията между тях. Операциите, които изграждат един алгоритъм, могат да бъдат разпределени на различни класове, изграждайки сложна подредба, която може да се окаже трудна за управление. Поведенческите шаблони обхващат начини за изразяване на разделението на операциите между класовете и оптимизират управлението на комуникацията. А именно ключът към усвояването на този тип шаблони е комуникацията. Фокусът се измества от обектите и класовете, които съставят един софтуерен шаблон, към комуникацията между тях. <a href="#link3">[3]</a></p>
+                <p>В текущия документ ще разгледаме 13 основни поведенчески шаблона:</p>
+                <ol>
+                    <li><a href="#chain-of-responsibility">Chain of Responsibility</a></li>
+                    <li><a href="#command">Command</a></li>
+                    <li><a href="#interpreter">Interpreter</a></li>
+                    <li><a href="#iterator">Iterator</a></li>
+                    <li><a href="#mediator">Mediator</a></li>
+                    <li><a href="#memento">Memento</a></li>
+                    <li><a href="#null-object">Null Object</a></li>
+                    <li><a href="#observer">Observer</a></li>
+                    <li><a href="#specification">Specification</a></li>
+                    <li><a href="#state">State</a></li>
+                    <li><a href="#strategy">Strategy</a></li>
+                    <li><a href="#template-method">Template Method</a></li>
+                    <li><a href="#visitor">Visitor</a></li>
+                </ol>
             </article>
             <article>
-                <h1 id="head4" class="header-article holder-bg">Заключение</h1>
+                <h1 id="chain-of-responsibility" class="header-article holder-bg">Chain of Responsibility</h1>
+            </article>
+            <article>
+                <h1 id="command" class="header-article holder-bg">Command</h1>
+            </article>
+            <article>
+                <h1 id="interpreter" class="header-article holder-bg">Interpreter</h1>
+            </article>
+            <article>
+                <h1 id="iterator" class="header-article holder-bg">Iterator</h1>
+            </article>
+            <article>
+                <h1 id="mediator" class="header-article holder-bg">Mediator</h1>
+            </article>
+            <article>
+                <h1 id="memento" class="header-article holder-bg">Memento</h1>
+            </article>
+            <article>
+                <h1 id="null-object" class="header-article holder-bg">Null Object</h1>
+            </article>
+            <article>
+                <h1 id="observer" class="header-article holder-bg">Observer</h1>
+            </article>
+            <article>
+                <h1 id="specification" class="header-article holder-bg">Specification</h1>
+            </article>
+            <article>
+                <h1 id="state" class="header-article holder-bg">State</h1>
+            </article>
+            <article>
+                <h1 id="strategy" class="header-article holder-bg">Strategy</h1>
+            </article>
+            <article>
+                <h1 id="template-method" class="header-article holder-bg">Template Method</h1>
+            </article>
+            <article>
+                <h1 id="visitor" class="header-article holder-bg">Visitor</h1>
+            </article>
+            <article>
+                <h1 id="conclusion" class="header-article holder-bg">Заключение</h1>
                 <p>Съществуват безброй много начини за структуриране на кода и проекта на вашата система и от вас зависи колко мисъл ще посветите на нейната архитектура. Но в повечето случаи е добра идея да се следват всеобщо приети шаблони, защото ще подобрят менажирането и четимостта на вашия код.</p>
             </article>
             <article>
-                <h1 id="head3" class="header-article holder-bg">Източници</h1>
-                <p><i>[1]</i><a href="http://www.vishalchovatiya.com/what-is-design-pattern/" target="_blank" class="ref-link">What is Design Pattern?</a>, последно посетено на</p>
-                <p><i>[2]</i><a href="" target="_blank" class="ref-link"></a></p>
-                <p><i>[3]</i><a href="" target="_blank" class="ref-link"></a></p>
-                <p><i>[4]</i><a href="" target="_blank" class="ref-link"></a></p>
+                <h1 id="references" class="header-article holder-bg">Източници</h1>
+                <p id="link1"><i>[1] </i><a href="http://www.vishalchovatiya.com/what-is-design-pattern/" target="_blank" class="ref-link">What is Design Pattern?</a>, последно посетено на</p>
+                <p id="link2"><i>[2] </i><a href="https://sourcemaking.com/design_patterns" target="_blank" class="ref-link">Source Making - Design Patterns</a>, последно посетено на</p>
+                <p id="link3"><i>[3] </i><a href="https://www.gofpatterns.com/design-patterns/module6/intro-behavioral-designPatterns.php" target="_blank" class="ref-link">Introduction to Behavioral Design Patterns</a>, последно посетено на</p>
+                <p id="link4"><i>[4] </i><a href="https://designpatternsphp.readthedocs.io/en/latest/Behavioral/README.html#" target="_blank" class="ref-link">Design Patterns in PHP</a> - официални имплементации на софтуерни шаблони в <i>PHP</i>, последно посетено на</p>
             </article>
         </main>
         <footer class="holder-bg">

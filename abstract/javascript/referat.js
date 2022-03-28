@@ -17,21 +17,21 @@ window.onload = () => {
 
     function populateTOC() {
         let toc = document.getElementById("toc");
-        const headers = document.querySelectorAll(".header-article");
+        const headers = document.querySelectorAll("h1");
 
         for (let header of headers) {
             let field = document.createElement("a");
             field.href = "#" + header.id;
-            field.className = "toc-header nav-btn";
+            field.className = "toc-h1 nav-btn";
             field.innerHTML = header.innerHTML;
             toc.appendChild(field);
 
-            const subheaders = document.querySelectorAll("#" + header.id + " ~ section h2.subheader");
+            const subheaders = document.querySelectorAll("#" + header.id + " ~ section h2");
             
             for (let subheader of subheaders) {
                 let field = document.createElement("a");
                 field.href = "#" + subheader.id;
-                field.className = "toc-subheader nav-btn";
+                field.className = "toc-h2 nav-btn";
                 field.innerHTML = subheader.innerHTML;
                 toc.appendChild(field);
             }

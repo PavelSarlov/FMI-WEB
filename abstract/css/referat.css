@@ -6,58 +6,103 @@ body, main, footer {
     text-align: center;
     color: #cccccc;
     overflow-y: auto;
+    -webkit-text-size-adjust: auto;
 }
 
 article {
     width: 60%;
     margin: auto;
-    font-size: 1.1vw;
+    /* font-size: 1.1vmax; */
+    font-size: 16pt;
     color: #000000;
     text-align: justify;
 }
 
-li {
+figcaption {
+    text-align: center;
+    color: #5A5A5A;
+    font-style: italic;
+}
+
+li, figcaption {
     margin-top: 0.5em;
 }
 
 i {
     font-weight: bold;
-    margin: auto 0.5em;
 }
 
-.toc-holder, #toc-indicator {
+img {
+    width: 100%;
+}
+
+a {
+    color: #6500D9;
+    font-weight: bold;
+}
+
+header {
+    display: block;
+    font-size: 4vmax;
+    margin: auto;
+    padding: 1em;
+}
+
+h1 {
+    display: block;
+    font-size: 2vmax;
+    /* font-size: 32; */
+    margin: 1em auto;
+    padding: 0.5em;
+    color: #cccccc;
+    text-align: center;
+}
+
+h2 {
+    display: block;
+    /* font-size: 2vmax; */
+    font-size: 32;
+    margin: 1em auto;
+}
+
+#toc, #toc-indicator {
     position: fixed;
+    max-height: 50vh;
     height: fit-content;
     width: fit-content;
+    overflow-y: auto;
     top: 50%;
     left: 0;
     transform: translateY(-50%) translateX(-100%);
     z-index: 1;
-    font-size: 1vw;
+    font-size: 1vmax;
+    transition: 0.3s;
+    border-top: 0.3em solid #000000;
+    border-bottom: 0.3em solid #000000;
+    border-right: 0.3em solid #000000;
 }
 
 #toc-indicator {
     transform: translateY(-50%);
+    border: 0;
 }
 
-#toc-holder:hover > #toc-indicator {
-    visibility: hidden;
-}
-
-#toc-holder:hover > #toc {
-    transition: transform 0.3s;
+.toc-container:hover > #toc {
     transform: translateY(-50%);
 }
 
-.toc-header, .toc-subheader {
-    font-size: 1vw;
-    color: #ffffff;
+.toc-container:hover > #toc-indicator {
+    visibility: hidden;
+}
+
+.toc-h1, .toc-h2 {
+    font-size: 1vmax;
     text-decoration: none;
     overflow-wrap: break-word;
     border-bottom: 0.2em solid #cccccc;
 }
 
-.toc-subheader {
+.toc-h2 {
     font-size: 0.8em;
     margin-left: 1em;
 }
@@ -66,7 +111,8 @@ i {
     display: block;
     padding: 0.5em;
     transition: 0.3s;
-    background: #998811;
+    color: #FFC745;
+    background: #a31155;
 }
 
 .nav-btn:hover {
@@ -78,14 +124,15 @@ i {
 
 #to-top-btn {
     position: fixed;
+    padding: 0 0.2em;
     height: fit-content;
     width: fit-content;
     top: 80%;
     left: 92%;
     z-index: 1;
-    font-size: 2vw;
+    font-size: 4vmax;
     visibility: hidden;
-    border: 0.2em solid;
+    border: 0.1em solid;
     border-color: #000000;
     border-radius: 2em;
     text-decoration: none;
@@ -94,26 +141,3 @@ i {
 .holder-bg {
     background: #a31155;
 }
-
-.header-title {
-    display: block;
-    font-size: 4vw;
-    margin: auto;
-    padding: 1em;
-}
-
-.header-article {
-    display: block;
-    font-size: 2vw;
-    margin: 1em auto;
-    padding: 0.5em;
-    color: #cccccc;
-    text-align: center;
-}
-
-.subheader {
-    display: block;
-    font-size: 2vw;
-    margin: 1em auto;
-}
-
