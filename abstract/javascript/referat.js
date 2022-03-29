@@ -19,21 +19,45 @@ window.onload = () => {
         let toc = document.getElementById("toc");
         const headers = document.querySelectorAll("h1");
 
-        for (let header of headers) {
-            let field = document.createElement("a");
-            field.href = "#" + header.id;
-            field.className = "toc-h1 nav-btn";
-            field.innerHTML = header.innerHTML;
-            toc.appendChild(field);
+        function createTocLink(href, className, innerHTML) {
+            let link = document.createElement("a");
+            link.href = href;
+            link.className = className;
+            link.innerHTML = innerHTML;
+            return link;
+        }
 
+        for (let header of headers) {
+            const link = createTocLink("#" + header.id, "toc-h1 nav-btn", header.innerHTML);
             const subheaders = document.querySelectorAll("#" + header.id + " ~ section h2");
-            
-            for (let subheader of subheaders) {
-                let field = document.createElement("a");
-                field.href = "#" + subheader.id;
-                field.className = "toc-h2 nav-btn";
-                field.innerHTML = subheader.innerHTML;
-                toc.appendChild(field);
+
+            if (subheaders.length > 0) {
+                let headerDropdown = document.createElement("div");
+                headerDropdown.className = "dropdown-toggle";
+                
+                let dropBtn = document.createElement("button");
+                dropBtn.className = "dropdown-btn-toggle nav-btn toc-h1";
+                dropBtn.innerHTML = "▼";
+                dropBtn.addEventListener("click", event => {
+                    let el = event.target.nextSibling;
+                    el.style.fontSize = (el.style.fontSize != "1vmax" ? "1vmax" : "0vmax");
+                    event.target.innerHTML = (event.target.innerHTML != "▲" ? "▲" : "▼");
+                });
+
+                let dropdownContents = document.createElement("div");
+                dropdownContents.className = "dropdown-contents";
+
+                for (let subheader of subheaders) {
+                    dropdownContents.appendChild(createTocLink("#" + subheader.id, "toc-h2 nav-btn", subheader.innerHTML));
+                }
+
+                toc.appendChild(headerDropdown);
+                headerDropdown.appendChild(link);
+                headerDropdown.appendChild(dropBtn);
+                headerDropdown.appendChild(dropdownContents);
+            }
+            else {
+                toc.appendChild(link);
             }
         }
     }

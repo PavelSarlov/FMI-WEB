@@ -78,6 +78,23 @@
             </article>
             <article>
                 <h1 id="chain-of-responsibility" class="header-article holder-bg">Chain of Responsibility</h1>
+                <section>
+                    <h2 id="chain-of-responsibility-problem">Казус</h2>
+                    <p>Нека да разгледаме следната ситуация: нашата система е изградена от вариращ брой модули, които очакват заявки от клиент за обработка. Трябва да измислим ефикасен начин за разпределяне на заявките към съответстващите им модули без да се налага твърдо да закодираме връзките.</p>
+                    <figure>
+                        <img src="img/request-stream.png" alt="Stream of Requests"/>
+                        <figcaption>Фигура 2. Диаграма на поток от клиентски заявки. <a href="#link2">[2]</a></figcaption>
+                    </figure>
+                </section>
+                <section>
+                    <h2 id="chain-of-responsibility-proposal">Предложение</h2>
+                    <p>Може да капсулираме модулите, които обработват заявките, в една абстрактна тръба (<i>pipeline</i>), в която клиентите ще пускат своите заявки.</p>
+                    <figure>
+                        <img src="img/module-pipeline.png" alt="Pipeline of Modules"/>
+                        <figcaption>Фигура 3. Диаграма на тръба от модули. <a href="#link2">[2]</a></figcaption>
+                    </figure>
+                    <p></p>
+                </section>
             </article>
             <article>
                 <h1 id="command" class="header-article holder-bg">Command</h1>
