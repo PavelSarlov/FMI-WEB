@@ -9,10 +9,10 @@
     </head>
     <body>
         <nav>
-            <div class="toc-container">
+            <aside class="toc-container">
                 <div id="toc"></div>
                 <div id="toc-indicator" class="nav-btn">&gt;&gt;</div>
-            </div>
+            </aside>
             <a id="to-top-btn" href="#" class="nav-btn">&#x2B06;</a>
         </nav>
         <main>
@@ -37,7 +37,7 @@
                     <h2 id="pattern-uses" class="subheader">Полза от софтуерните шаблони</h2>
                     <p>Софтуерните шаблони значително могат да забързат процеса на разработка като предоставят изпробвани и доказани образци. Ефективния софтуерен дизайн изисква разглеждането на проблеми, които може да не станат достатъчно ясни в началния етап от имплементацията. Преизползването на софтуерните шаблони помага с предотвратяването на едва доловими грешки, които могат да доведат до огромни проблеми, както и подобрява четимостта на кода от програмистите и архитектите, запознати с шаблоните.</p>
                     <p>Често хората са наясно как да прилагат дадени софтуерни дизайн техники за определени проблеми. Тези техники обаче са трудно приложими в по-широк кръг от проблеми. Софтуерните шаблони предоставят основни решения, документирани във формат, който не изисква специфики на даден проблем.</p>
-                    <p>В допълнение, шаблоните позволяват на разработчиците да комуникират, използвайки добре познати, добре разбрани наименования в софтуерните взаимоотношения. Често срещани шаблони могат да претърпят подобрения с течение на времето, които да ги направят по-укрепнали от <i>ad-hoc</i> дизайните.</p>
+                    <p>В допълнение, шаблоните позволяват на разработчиците да комуникират, използвайки добре познати, добре разбрани наименования в софтуерните взаимоотношения. Често срещани шаблони могат да претърпят подобрения с течение на времето, които да ги направят по-укрепнали от <i>ad-hoc</i> дизайните. <a href="#link2">[2]</a></p>
                 </section>
                 <section>
                     <h2 id="pattern-types" class="subheader">Видове софтуерни шаблони</h2>
@@ -83,7 +83,7 @@
                     <p>Нека да разгледаме следната ситуация: нашата система е изградена от вариращ брой модули, които очакват заявки от клиент за обработка. Трябва да измислим ефикасен начин за разпределяне на заявките към съответстващите им модули без да се налага твърдо да закодираме връзките.</p>
                     <figure>
                         <img src="img/request-stream.png" alt="Stream of Requests"/>
-                        <figcaption>Фигура 2. Диаграма на поток от клиентски заявки. <a href="#link2">[2]</a></figcaption>
+                        <figcaption>Фигура 2. Диаграма на поток от клиентски заявки. <a href="#link2">[5]</a></figcaption>
                     </figure>
                 </section>
                 <section>
@@ -91,9 +91,19 @@
                     <p>Може да капсулираме модулите, които обработват заявките, в една абстрактна тръба (<i>pipeline</i>), в която клиентите ще пускат своите заявки.</p>
                     <figure>
                         <img src="img/module-pipeline.png" alt="Pipeline of Modules"/>
-                        <figcaption>Фигура 3. Диаграма на тръба от модули. <a href="#link2">[2]</a></figcaption>
+                        <figcaption>Фигура 3. Диаграма на тръба от модули. <a href="#link2">[5]</a></figcaption>
                     </figure>
-                    <p></p>
+                    <p>Шаблонът създава верига от обработващи обекти и прекарва заявката през всеки един, докато се достигне някой, който може да я обработи. Броят обекти не е известен предварително, той може да бъде променен динамично. Този верижен механизъм използва рекурсивна композиция, за да позволи добавяне на обработващи обекти без ограничения.</p>
+                    <p><i>Chain of Responsibility</i> опростява взаимовръзката между отделните обекти. Вместо да имаме податели и получатели, които образуват един пълен граф (т.е. всеки знае за всеки), в случая всеки подател пази единствено референция към главата/входа на веригата/тръбата, а всеки получател - единствена референция към неговия непосредствен наследник.</p>
+                    <p>Добра идея е веригата да бъде имплементирана по начин, който да не позволява на необработени заявки да "висят", а да се "улавят" в края на веригата.Също така този шаблон не би бил подходящ за системи, при които заявките си имат един определен получател или клиентският обект знае кой трябва да му обработи заявката.</p>
+                </section>
+                <section>
+                    <h2 id="chain-of-responsibility-structure">Структура</h2>
+                    <figure>
+                        <img src="img/chain-of-responsibility-uml.png" alt="Chain of Responsibility Structure"/>
+                        <figcaption>Фигура 4. UML Диаграма на примерен <i>Chain of Responsibility</i>. <a href="#link2">[5]</a></figcaption>
+                    </figure>
+                    <p>Наследените класове </p>
                 </section>
             </article>
             <article>
@@ -142,6 +152,19 @@
                 <p id="link2"><i>[2] </i><a href="https://sourcemaking.com/design_patterns" target="_blank" class="ref-link">Source Making - Design Patterns</a>, последно посетено на</p>
                 <p id="link3"><i>[3] </i><a href="https://www.gofpatterns.com/design-patterns/module6/intro-behavioral-designPatterns.php" target="_blank" class="ref-link">Introduction to Behavioral Design Patterns</a>, последно посетено на</p>
                 <p id="link4"><i>[4] </i><a href="https://designpatternsphp.readthedocs.io/en/latest/Behavioral/README.html#" target="_blank" class="ref-link">Design Patterns in PHP</a> - официални имплементации на софтуерни шаблони в <i>PHP</i>, последно посетено на</p>
+                <p id="link2"><i>[5] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[6] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[7] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[8] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[9] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[10] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[11] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[12] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[13] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[14] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[15] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[16] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link2"><i>[17] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
             </article>
         </main>
         <footer class="holder-bg">
