@@ -1,6 +1,5 @@
-body, main, footer {
+body {
     margin: auto;
-    width: 100%;
     background: #dcdcdc;
     font-family: Arial;
     text-align: center;
@@ -10,26 +9,37 @@ body, main, footer {
 }
 
 article {
-    width: 80%;
+    width: 60%;
     margin: auto;
     /* font-size: 1.1vmax; */
-    font-size: 16pt;
+    font-size: 14pt;
     color: #000000;
     text-align: justify;
+}
+
+footer {
+    margin-top: 2em;
+    padding: 1em;
+}
+
+code, .sample-output {
+    width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    border: 0.1em solid #000000;
+    background: #efecf4;
+    padding: 1em;
 }
 
 figcaption {
     text-align: center;
     color: #5A5A5A;
     font-style: italic;
+    font-family: Arial;
 }
 
 li, figcaption {
     margin-top: 0.5em;
-}
-
-i {
-    font-weight: bold;
 }
 
 img {
@@ -68,35 +78,44 @@ h2 {
     margin: 1em auto;
 }
 
-#toc, #toc-indicator {
+aside {
     position: fixed;
-    max-height: 50vh;
     height: fit-content;
     width: fit-content;
-    overflow-y: auto;
     top: 50%;
     left: 0;
-    transform: translateY(-50%) translateX(-100%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     z-index: 1;
-    font-size: 1vmax;
+    transform: translateY(-50%) translateX(-92%);
     transition: transform 0.3s;
+    font-size: 1vmax;
+}
+
+#toc {
+    width: 92%;
+    max-height: 50vh;
+    overflow-y: auto;
     border-top: 0.3em solid #000000;
     border-bottom: 0.3em solid #000000;
     border-right: 0.3em solid #000000;
 }
 
 #toc-indicator {
-    transform: translateY(-50%);
+    width: 8%;
+    height: fit-content;
+    font-size: inherit;
     border: 0;
 }
 
-.toc-container:hover > #toc {
-    transform: translateY(-50%);
-}
+/* .toc-container:hover > #toc { */
+/*     transform: translateY(-50%); */
+/* } */
 
-.toc-container:hover > #toc-indicator {
-    visibility: hidden;
-}
+/* .toc-container:hover > #toc-indicator { */
+/*     visibility: hidden; */
+/* } */
 
 .toc-h1, .toc-h2 {
     font-size: 1vmax;
@@ -114,7 +133,7 @@ h2 {
 .nav-btn {
     display: block;
     padding: 0.5em;
-    transition: background color 0.3s;
+    transition: background 0.3s, color 0.3s;
     color: #FFC745;
     background: #a31155;
 }
@@ -132,7 +151,7 @@ h2 {
     height: fit-content;
     width: fit-content;
     top: 80%;
-    left: 92%;
+    left: 94%;
     z-index: 1;
     font-size: 4vmax;
     visibility: hidden;
@@ -146,18 +165,23 @@ h2 {
     background: #a31155;
 }
 
-.dropdown-toggle {
-    display: block;
+.dropdown-toggle, .dropdown-field-wrapper {
+    display: flex;
+    flex-direction: column;
 }
 
-.dropdown-toggle > .toc-h1 {
-    display: inline-block;
+.dropdown-field-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.dropdown-field-wrapper > .toc-h1 {
     box-sizing: border-box;
     width: 85%;
 }
 
-.dropdown-toggle > .dropdown-btn-toggle {
-    display: inline-block;
+.dropdown-field-wrapper > .dropdown-btn-toggle {
     box-sizing: border-box;
     width: 15%;
     text-align: center;
@@ -168,4 +192,92 @@ h2 {
 .dropdown-toggle > .dropdown-contents {
     font-size: 0;
     transition: font-size 0.3s;
+}
+
+.copy-to-clipboard {
+    position: relative;
+    float: right;
+}
+
+.code-inline {
+    padding: 0 0.5em;
+    border: 0;
+    background: #c4c4c4;
+    border-radius: 1em;
+    font-style: italic;
+    font-weight: bold;
+}
+
+kbd {
+    padding: 0 0.2em;
+}
+
+.switch {
+    position: fixed;
+    top: 10%;
+    left: 94%;
+    width: 2.5em;
+    height: 1.5em;
+    font-size: 1vmax;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    height: 1.2em;
+    width: 1.2em;
+    left: 0.15em;
+    bottom: 0.15em;
+    -webkit-transition: -webkit-transform .4s;
+    -ms-transition: -ms-transform .4s;
+    transition: transform .4s;
+    background-color: white;
+    color: #000;
+    content: "☀";
+}
+
+input:checked {
+    background-color: #000;
+}
+
+input:checked + .slider {
+    background-color: #ccc;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 0.2em #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(1em);
+    -ms-transform: translateX(1em);
+    transform: translateX(1em);
+    background-color: #000;
+    color: #fff;
+    content: "☾";
+}
+
+.slider.round {
+    border-radius: 2em;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }

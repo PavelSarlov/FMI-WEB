@@ -1,0 +1,24 @@
+body {
+    background: #323232;
+}
+
+article {
+    color: #ffffff;
+}
+
+figcaption {
+    color: #dddddd;
+}
+
+.code-inline {
+    background-color: #7e7e7e;
+    color: #fff;
+}
+
+code, .sample-output {
+    background-color: #20201d;
+}
+
+a {
+    color: #8ac9f5;
+}

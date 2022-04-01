@@ -5,15 +5,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Реферат</title>
         <link rel="stylesheet" href="css/referat.css">
-        <script defer src="javascript/referat.js"></script>
+        <link rel="stylesheet" href="css/referat-dark.css" id="dark-mode-css" disabled>
+        <link rel="stylesheet" href="javascript/highlight/styles/base16/atelier-cave-light.min.css">
+        <link rel="stylesheet" href="javascript/highlight/styles/base16/atelier-dune.min.css" id="dark-highlight-css" disabled>
+        <script src="javascript/referat.js"></script>
+        <script src="javascript/highlight/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
         <nav>
-            <aside class="toc-container">
+            <aside id="toc-container">
                 <div id="toc"></div>
-                <div id="toc-indicator" class="nav-btn">&gt;&gt;</div>
+                <button id="toc-indicator" class="nav-btn">&gt;&gt;</button>
             </aside>
             <a id="to-top-btn" href="#" class="nav-btn">&#x2B06;</a>
+            <label class="switch">
+                <input id="view-switch" type="checkbox">
+                <span class="slider round"></span>
+            </label>
         </nav>
         <main>
             <header class="holder-bg">
@@ -51,7 +60,7 @@
                         <li>Структурни шаблони - идеята им се основава на композицията на класове и обекти. Класовите шаблони се възползват от наследяване за композиция на интерфейсите. Обектните шаблони дефинират начини за композиция на обектите с цел получаване на нова функционалност.</li>
                         <li>Шаблони за поведение - идеята им се основава на комуникацията между обектите на класовете. Поведенческите шаблони имат за основна цел да разглеждат комуникацията между различните инстанциирани обекти в една система.</li>
                     </ul>
-                    <p>В текущия документ ще се спрем само на шаблоните за поведение като ще разгледаме какви видове биват, в какви случаи се използват, както и ще дадем малко примери за имплементацията им в код, написан на <i>php</i>.</p>
+                    <p>В текущия документ ще се спрем само на шаблоните за поведение като ще разгледаме някои от основните типове, какви проблеми решават, както и ще дадем малко примери за имплементацията им в код, написан на <i>PHP</i>.</p>
                 </section>
             </article>
             <article>
@@ -59,88 +68,291 @@
                 <p>Поведенческите шаблони описват начина, по който обектите и класовете взаимодействат и разпределят отговорностите помежду си. Всеки шаблон абстрахира някакво действие, което програмистите искат даден обект или клас да възприема. Променяйки обекта или класа, можете да промените използвания алгоритъм, засегнатите обекти или поведението и въпреки това да запазите основния интерфейс за клиентските класове.</p>
                 <p>Добър набор от поведенчески шаблони на разположение ще ви позволят да разрешите най-различни предизвикателства от страна на дизайна на една обектно-ориентирана система. Някои сред тях биват номериране на списъци, въздействане на промяна в състоянието на обект, сериализация и десериализация на обекти без пробив в енкапсулацията на данните.</p>
                 <p>Шаблоните за поведение засягат алгоритмите и комуникацията между тях. Операциите, които изграждат един алгоритъм, могат да бъдат разпределени на различни класове, изграждайки сложна подредба, която може да се окаже трудна за управление. Поведенческите шаблони обхващат начини за изразяване на разделението на операциите между класовете и оптимизират управлението на комуникацията. А именно ключът към усвояването на този тип шаблони е комуникацията. Фокусът се измества от обектите и класовете, които съставят един софтуерен шаблон, към комуникацията между тях. <a href="#link3">[3]</a></p>
-                <p>В текущия документ ще разгледаме 13 основни поведенчески шаблона:</p>
-                <ol>
-                    <li><a href="#chain-of-responsibility">Chain of Responsibility</a></li>
-                    <li><a href="#command">Command</a></li>
-                    <li><a href="#interpreter">Interpreter</a></li>
-                    <li><a href="#iterator">Iterator</a></li>
-                    <li><a href="#mediator">Mediator</a></li>
-                    <li><a href="#memento">Memento</a></li>
-                    <li><a href="#null-object">Null Object</a></li>
-                    <li><a href="#observer">Observer</a></li>
-                    <li><a href="#specification">Specification</a></li>
-                    <li><a href="#state">State</a></li>
-                    <li><a href="#strategy">Strategy</a></li>
-                    <li><a href="#template-method">Template Method</a></li>
-                    <li><a href="#visitor">Visitor</a></li>
+                <p>В текущия документ ще разгледаме няколко основни поведенчески шаблона:</p>
+                <ol id="patterns-list">
                 </ol>
             </article>
             <article>
-                <h1 id="chain-of-responsibility" class="header-article holder-bg">Chain of Responsibility</h1>
+                <h1 id="cor-title" class="header-article holder-bg pattern">Верига отговорности (Chain of Responsibility)</h1>
                 <section>
-                    <h2 id="chain-of-responsibility-problem">Казус</h2>
-                    <p>Нека да разгледаме следната ситуация: нашата система е изградена от вариращ брой модули, които очакват заявки от клиент за обработка. Трябва да измислим ефикасен начин за разпределяне на заявките към съответстващите им модули без да се налага твърдо да закодираме връзките.</p>
+                    <h2 id="cor-problem">Казус</h2>
+                    <p>Представете си, че разработвате онлайн система за поръчки. Искате да ограничите достъпа към системата така, че само удостоверени потребители могат да създават поръчки. Съща така, потребители с администраторски права трябва да имат пълен достъп до всички поръчки.</p>
+                    <p>След кратко планиране осъзнавате, че тези проверки трябва да се извършват последователно. При всяка заявка на потребител, съдържаща информация за него, приложението се опитва да го удостовери и ако не успее, заявката се отхвърля.</p>
                     <figure>
-                        <img src="img/request-stream.png" alt="Stream of Requests"/>
-                        <figcaption>Фигура 2. Диаграма на поток от клиентски заявки. <a href="#link2">[5]</a></figcaption>
+                        <img src="img/cor-01.png" alt="Request filtering"/>
+                        <figcaption>Фигура 2. Филтриране на клиентски заявки. <a href="#link5">[5]</a></figcaption>
                     </figure>
+                    <p>През следващите няколко месеца имплементирате още няколко подобни проверки.</p>
+                    <ul>
+                        <li>Един от колегите ви предложил, че не било безопасно да се подават необработени данни директно към системата, затова сте добавили допълнителна валидация за почистване на заявката.</li>
+                        <li>По-късно, някой забелязал, че системата е уязвима на груба сила при разбиване на паролата. За предотвратяването на този проблем вие сте добавили проверка, която филтрира повторение на неуспешни заявки от идентичен IP адрес.</li>
+                        <li>Някой друг предложил, че може да се забърза системата чрез кеширане на резултати от заявки, съдържащи идентични данни. Затова сте добавили още една проверка, която позволява само на некеширани заявки да постъпват в системата.</li>
+                    </ul>
+                    <figure>
+                        <img src="img/cor-02.png" alt="Request filtering XL"/>
+                        <figcaption>Фигура 3. Допълнителни филтриране на клиентски заявки. <a href="#link5">[5]</a></figcaption>
+                    </figure>
+                    <p>Кодът на филтрите, който първоначално си беше бъркотия, с всяка нова функционалност заприлича все повече на спагети. Промяната в една проверка понякога трошала другите, а най-лошото от всичко било, когато се наложило да преизползвате проверките за други компоненти на системата, което предположило дублиране на части от кода. Изобщо системата се е станала прекалено трудна за разбиране и скъпа за поддръжка. Мъчели сте се с кода известно време, докато един ден сте решили да го рефакторирате напълно.</p>
                 </section>
                 <section>
-                    <h2 id="chain-of-responsibility-proposal">Предложение</h2>
-                    <p>Може да капсулираме модулите, които обработват заявките, в една абстрактна тръба (<i>pipeline</i>), в която клиентите ще пускат своите заявки.</p>
+                    <h2 id="cor-proposal">Предложение</h2>
+                    <p>Като много други шаблони за поведение и <i><strong>Chain of Responsibility</strong></i> разчита преобразуването на дадено поведение в независими обекти наречени <i>handlers</i>. В нашия случай всяка проверка трябва да си има отделен клас с метод за нейното изпълнение. Заявката, заедно с данните си, се подава на този метод като аргумент.</p>
+                    <p>Този шаблон предполага свързването на тези <i>handler</i>-и във верига. Всеки от тях си пази референция към следващия във веригата. В допълнение, всеки предава заявката нататък при нейната обработка. Така тя има възможността да мине през всеки <i>handler</i>, докато всеки е имал шанса да я обработи. А най-хубавото нещо е, че всеки от тях може да реши дали да не предаде заявката надолу по веригата. Същото се отнася и за системата от нашия пример. Стига заявката да съдържа правилните данни, всички <i>handler</i>-и ще изпълнят своята задача, била тя установление или кеширане.</p>
                     <figure>
-                        <img src="img/module-pipeline.png" alt="Pipeline of Modules"/>
-                        <figcaption>Фигура 3. Диаграма на тръба от модули. <a href="#link2">[5]</a></figcaption>
+                        <img src="img/cor-03.png" alt="Chain of handlers"/>
+                        <figcaption>Фигура 4. Диаграма на тръба от <i>handler</i>-и. <a href="#link5">[5]</a></figcaption>
                     </figure>
-                    <p>Шаблонът създава верига от обработващи обекти и прекарва заявката през всеки един, докато се достигне някой, който може да я обработи. Броят обекти не е известен предварително, той може да бъде променен динамично. Този верижен механизъм използва рекурсивна композиция, за да позволи добавяне на обработващи обекти без ограничения.</p>
-                    <p><i>Chain of Responsibility</i> опростява взаимовръзката между отделните обекти. Вместо да имаме податели и получатели, които образуват един пълен граф (т.е. всеки знае за всеки), в случая всеки подател пази единствено референция към главата/входа на веригата/тръбата, а всеки получател - единствена референция към неговия непосредствен наследник.</p>
-                    <p>Добра идея е веригата да бъде имплементирана по начин, който да не позволява на необработени заявки да "висят", а да се "улавят" в края на веригата.Също така този шаблон не би бил подходящ за системи, при които заявките си имат един определен получател или клиентският обект знае кой трябва да му обработи заявката.</p>
+                    <p>Съществува и малко по-различен подход (а и по-каноничен), при който ако <i>handler</i> реши, че може да обработи заявката, не я предава нататък по веригата. Т.е. или само един обработва заявката, или нито един. Този подход е често срещан при обработката на събития в един графичен потребителски интерфейс. Например, когато потребител натисне бутон, събитието травърсира нагоре по веригата от <i>GUI</i> елементи, която започва с него, минава през всички негови контейнери (форми, панели) и се озовава в главния прозорец. Събитието се обработва от първия елемент, който е способен да го направи. Хубавото на примера е, че показва как може да се изведе верига от дърво от обекти.</p>
+                    <figure>
+                        <img src="img/cor-04.png" alt="Tree of GUI elements"/>
+                        <figcaption>Фигура 4. Клон на дърво от <i>GUI</i> елементи. <a href="#link5">[5]</a></figcaption>
+                    </figure>
+                    <p>Изключително важно е всички <i>handler</i> класове да имплементират един и същ интерфейс. Всеки конкретен <i>handler</i> обект се интересува само дали съседа му съдържа <code class="code-inline">execute</code> метод. По този начин може да изграждате вериги по време на изпълнение, използвайки различни <i>handler</i> без да бъдат тясно свързани с конкретните им класове.</p>
                 </section>
                 <section>
-                    <h2 id="chain-of-responsibility-structure">Структура</h2>
+                    <h2 id="cor-structure">Структура</h2>
                     <figure>
-                        <img src="img/chain-of-responsibility-uml.png" alt="Chain of Responsibility Structure"/>
+                        <img src="img/cor-05.png" alt="Chain of Responsibility Structure"/>
                         <figcaption>Фигура 4. UML Диаграма на примерен <i>Chain of Responsibility</i>. <a href="#link2">[5]</a></figcaption>
                     </figure>
-                    <p>Наследените класове </p>
+                    <ol>
+                        <li><code class="code-inline">Handler</code>-ът декларира общ за всички обработващи обекти интерфейс. Обикновено съдържа един единствен метод за обработка на заявки, но понякога може да съдържа и метод за добавяне на следващия обект във веригата.</li>
+                        <li><code class="code-inline">BaseHandler</code> е клас по избор, в който може да се сложи код, общ за всички <i>handler</i>-и. По принцип този клас дефинира поле, съдържащо референция към следващия обект. Клиентите могат да изградят верига, подавайки <i>handler</i> към конструктора или <i>setter</i>-а на предишния такъв. Класът може също да имплементира държание по подразбиране - да подаде изпълнението на следващия обект след проверка за съществуването му.</li>
+                        <li>Клиентът (<code class="code-inline">Client</code>) може да изгражда постоянни или динамични вериги, в зависимост от логиката на приложението. Забележете, че заявка може да бъде насочена към който и да е <i>handler</i> във веригата, не е задължително да е първия.</li>
+                        <li>Същинските обработващи обекти (<code class="code-inline">ConcreteHandlers</code>) съдържат кода за обработката на заявките. При получаването на заявка, всеки от тях трябва да реши дали да я обработи и дали да я подаде нататък в опашката. По принцип, обработвателите са самостоятелни и неизменими, получават всички необходими данни чрез конструктура.</li>
+                    </ol>
+                </section>
+                <section>
+                    <h2 id="cor-code-sample">Примерна имплементация</h2>
+                    <pre>
+                        <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
+                        <code class="language-php">
+&lt;?php
+
+namespace RefactoringGuru\ChainOfResponsibility\Conceptual;
+
+/**
+ * Интерфейсът Handler декларира метод за изграждане на веригата от обработващи обекти.
+ * Също така декларира метод за обработка на заявка.
+ */
+interface Handler
+{
+    public function setNext(Handler $handler): Handler;
+
+    public function handle(string $request): ?string;
+}
+
+/**
+ * Поведението по подразбиране може да бъде имплементирано в базов handler клас.
+ */
+abstract class AbstractHandler implements Handler
+{
+    /**
+     * @var Handler
+     */
+    private $nextHandler;
+
+    public function setNext(Handler $handler): Handler
+    {
+        $this-&gt;nextHandler = $handler;
+        // Връщайки handler от тук ще ни позволи да ги навържем по този начин:
+        // $monkey-&gt;setNext($squirrel)-&gt;setNext($dog);
+        return $handler;
+    }
+
+    public function handle(string $request): ?string
+    {
+        if ($this-&gt;nextHandler) {
+            return $this-&gt;nextHandler-&gt;handle($request);
+        }
+
+        return null;
+    }
+}
+
+/**
+ * Всички основни Handler-и или обработват заявка, или я пускат надолу по веригата.
+ */
+class MonkeyHandler extends AbstractHandler
+{
+    public function handle(string $request): ?string
+    {
+        if ($request === "Banana") {
+            return "Monkey: I'll eat the " . $request . ".\n";
+        } else {
+            return parent::handle($request);
+        }
+    }
+}
+
+class SquirrelHandler extends AbstractHandler
+{
+    public function handle(string $request): ?string
+    {
+        if ($request === "Nut") {
+            return "Squirrel: I'll eat the " . $request . ".\n";
+        } else {
+            return parent::handle($request);
+        }
+    }
+}
+
+class DogHandler extends AbstractHandler
+{
+    public function handle(string $request): ?string
+    {
+        if ($request === "MeatBall") {
+            return "Dog: I'll eat the " . $request . ".\n";
+        } else {
+            return parent::handle($request);
+        }
+    }
+}
+
+/**
+ * По принцип клиентският код е подходящ за работа с един handler. В повечето
+ * случаи даже няма представа, че той е част от верига.
+ */
+function clientCode(Handler $handler)
+{
+    foreach (["Nut", "Banana", "Cup of coffee"] as $food) {
+        echo "Client: Who wants a " . $food . "?\n";
+        $result = $handler-&gt;handle($food);
+        if ($result) {
+            echo "  " . $result;
+        } else {
+            echo "  " . $food . " was left untouched.\n";
+        }
+    }
+}
+
+/**
+ * Другата част от клиентския код игражда същинската верига.
+ */
+$monkey = new MonkeyHandler();
+$squirrel = new SquirrelHandler();
+$dog = new DogHandler();
+
+$monkey-&gt;setNext($squirrel)-&gt;setNext($dog);
+
+/**
+ * Клиентът би трябвало да може да изпрати заявка към който и да е handler,
+ * не само към първия във веригата.
+ */
+echo "Chain: Monkey &gt; Squirrel &gt; Dog\n\n";
+clientCode($monkey);
+echo "\n";
+
+echo "Subchain: Squirrel &gt; Dog\n\n";
+clientCode($squirrel);
+
+?&gt;
+                        </code>
+                        <figcaption>Код 1. Примерна имплементация на <i>Chain of Responsibility</i>. <a href="#link15">[15]</a></figcaption>
+                    </pre>
+                    <p>Изпълнението на горния код би трябвало да доведе до следния изход:</p>
+                    <pre class="sample-output">
+                        <samp>
+Chain: Monkey &gt; Squirrel &gt; Dog
+
+Client: Who wants a Nut?
+  Squirrel: I'll eat the Nut.
+Client: Who wants a Banana?
+  Monkey: I'll eat the Banana.
+Client: Who wants a Cup of coffee?
+  Cup of coffee was left untouched.
+
+Subchain: Squirrel &gt; Dog
+
+Client: Who wants a Nut?
+  Squirrel: I'll eat the Nut.
+Client: Who wants a Banana?
+  Banana was left untouched.
+Client: Who wants a Cup of coffee?
+  Cup of coffee was left untouched.
+                        </samp>
+                    </pre>
                 </section>
             </article>
             <article>
-                <h1 id="command" class="header-article holder-bg">Command</h1>
+                <h1 id="command-title" class="header-article holder-bg pattern">Команда (Command)</h1>
+                <section>
+                    <h2 id="command-problem">Казус</h2>
+                    <p>Представете си, че работите върху нов текстов редактор. Токущата ви задача е да създадете лента с инструменти, която има куп бутони за най-различни операции в редактора. Създали сте клас <code class="code-inline">Button</code>, който може да се използва както за бутоните на лентата с инструменти, така и за различните диалогови прозорци.</p>
+                    <figure>
+                        <img src="img/command-01.png" alt="Button base class"/>
+                        <figcaption>Фигура 5. Бутони наследяващи един и същ клас. <a href="#link6">[6]</a></figcaption>
+                    </figure>
+                    <p>Въпреки че всички бутони изглеждат подобни, всеки един от тях извършва различни операции. Къде бихте поставили кода за различните <i>click handler</i>-и? Най-простото решение е да се създадат множество подкласове за всяко място, където е използван бутона, които да съдържат съответната функционалност при натискане на бутона.</p>
+                    <figure>
+                        <img src="img/command-02.png" alt="Button inheritance"/>
+                        <figcaption>Фигура 6. Множество подкласове на един базов бутон.  <a href="#link6">[6]</a></figcaption>
+                    </figure>
+                    <p>Бързо ще осъзнаете обаче, че този подход има сериозни недостатъци. Първо, ще имате огромен набор от подкласове, което по принцип би било наред, ако не рискувахте да се счупи нещо в тях при всяка модификация на базовия клас. Накратко, <i>GUI</i> кода е станал прекалено зависим на кода с бизнес логиката.</p>
+                    <figure>
+                        <img src="img/command-03.png" alt="Code duplication"/>
+                        <figcaption>Фигура 7. Дупликация на код измежду елементите.  <a href="#link6">[6]</a></figcaption>
+                    </figure>
+                    <p>А ето и най-грозната част. Някои операции, например копиране/поставяне на текст, би трябвало да бъдат извикани от множество места. Примерно, потребител може да натисне бутона <i>Copy</i> на лентата с инструменти, да копира нещо през контекстното меню или просто да натисне <kbd>Ctrl + C.</kbd></p>
+                    <p>В началото, когато приложението имаше само лентата с инструменти, нямаше проблем да се имплементират операциите в различни подкласове, т.е. кодът за копиране да се намира в <code class="code-inline">CopyButton</code> класа беше наред. Обаче, с добавянето на контекстните менюта, клавиатурните комбинации и други неща, се налага да дублирате кода на операцията в много класове или менютата да се направят подвластни на бутоните, което е още по-лошо.</p>
+                </section>
+                <section>
+                    <h2 id="command-proposal">Предложение</h2>
+                    <p>Добрият софтуерен дизайн се базира на приципа за разделяне на отговорностите, който обикновено означава разбиване на приложението на слоеве. Най-често срещания пример: слой за графичния потребителски интерфейс и друг слой за бизнес логиката. <i>GUI</i> слоят отговаря за рендерирането на картината, улавянето на вход от потребителя и показване на резултати, произтичащи от взаимодействието между потребителя и приложението. Обаче, когато става дума за нещо важно като изчисляване на траекторията на Луната или съставяне на годишен доклад, графичният слой делегира работата към съответния слой от бизнес логиката.</p>
+                    <p>В код би изглеждало по следния начин: <i>GUI</i> обект извиква метод на обект от бизнес логиката, подавайки му някакви аругменти. Този процес по принцип се описва като изпращане на <i>заявка</i>.</p>
+                    <p><i><strong>Command</strong></i> шаблонът предполага, че <i>GUI</i> обектите не трябва да изпращат пряко тези заявки. Вместо това, трябва да се извличат детайлите от самата заявка, като обекта получател, името на метода и списък с аргументите, в отделен <i>command</i> клас, който има метод за изпълнение на тази заявка.</p>
+                    <p>Управляващите (<i>command</i>) обекти играят ролята на връзки между различните графични интерфейси и обектите с бизнес логиката. Оттук нататък, <i>GUI</i> обектът няма нужда да знае кой ще получи заявката му и как тя ще бъде преработена. Той просто задейства командата, която ще изпълни цялата работа.</p>
+                    <p>Следващата стъпка е управляващите обекти да имплементират един и същ интерфейс. По принцип той съдържа един метод за изпълнение, без аргументи. Интерфейсът служи за <i>decoupling</i> на различните обекти. По този начин можете да сменяте между различните управляващи обекти, свързани с подателя, ефективно изменяйки неговото поведение по време на изпълнение.</p>
+                    <p>Може би сте забелязали, че изпуснахме аргументите на самата заявка. Това е така, защото се предполага, че командата ще бъде конфигурирана предварително с подходящите данни или ще бъде способна да се приспособи с тях.</p>
+                    <p>Нека се върнем на текстовия редактор. След прилагане на <i>Command</i> шаблона вече не са ни нужни всички онези подкласове бутони, които да имплементират различното поведения при натискане. Можем просто да добавим референция в базовия <code class="code-inline">Button</code> клас към командния обект и бутонът да го извиква при натискане.</p>
+                    <p>Така за всяка възможна операция ще имплементирате управляващ клас, който да свържете със съответните бутони, в зависимост от тяхното предназначено поведение. Останалите <i>GUI</i> елементи (менюта, клавишни комбинации, цели диалози) могат да се имплементират по същия начин, избягвайки нежеланата дупликация на код.</p>
+                    <p>Като разултат, командите осигуряват удобен междинен слой, който намалява свързаността между графичния интерфейс и бизнес логиката.</p>
+                </section>
+                <section>
+                    <h2 id="command-structure">Структура</h2>
+                    <figure>
+                        <img src="img/.png" alt=""/>
+                        <figcaption> <a href="#link">[]</a></figcaption>
+                    </figure>
+                    <ol>
+                    </ol>
+                </section>
+                <section>
+                    <h2 id="command-code-sample">Примерна имплементация</h2>
+                    <pre>
+                        <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
+                        <code class="language-php">
+                        </code>
+                        <figcaption>Код . Примерна имплементация на <i></i>. <a href="#link">[]</a></figcaption>
+                    </pre>
+                    <p>Изпълнението на горния код би трябвало да доведе до следния изход:</p>
+                    <pre class="code-output">
+                    </pre>
+                </section>
             </article>
             <article>
-                <h1 id="interpreter" class="header-article holder-bg">Interpreter</h1>
+                <h1 id="iterator" class="header-article holder-bg pattern">Итератор (Iterator)</h1>
             </article>
             <article>
-                <h1 id="iterator" class="header-article holder-bg">Iterator</h1>
+                <h1 id="mediator" class="header-article holder-bg pattern">Посредник (Mediator)</h1>
             </article>
             <article>
-                <h1 id="mediator" class="header-article holder-bg">Mediator</h1>
+                <h1 id="memento" class="header-article holder-bg pattern">Спомен (Memento)</h1>
             </article>
             <article>
-                <h1 id="memento" class="header-article holder-bg">Memento</h1>
+                <h1 id="observer" class="header-article holder-bg pattern">Наблюдател (Observer)</h1>
             </article>
             <article>
-                <h1 id="null-object" class="header-article holder-bg">Null Object</h1>
+                <h1 id="state" class="header-article holder-bg pattern">Състояние (State)</h1>
             </article>
             <article>
-                <h1 id="observer" class="header-article holder-bg">Observer</h1>
+                <h1 id="strategy" class="header-article holder-bg pattern">Стратегия (Strategy)</h1>
             </article>
             <article>
-                <h1 id="specification" class="header-article holder-bg">Specification</h1>
+                <h1 id="template-method" class="header-article holder-bg pattern">Шаблонен метод (Template Method)</h1>
             </article>
             <article>
-                <h1 id="state" class="header-article holder-bg">State</h1>
-            </article>
-            <article>
-                <h1 id="strategy" class="header-article holder-bg">Strategy</h1>
-            </article>
-            <article>
-                <h1 id="template-method" class="header-article holder-bg">Template Method</h1>
-            </article>
-            <article>
-                <h1 id="visitor" class="header-article holder-bg">Visitor</h1>
+                <h1 id="visitor" class="header-article holder-bg pattern">Посетител (Visitor)</h1>
             </article>
             <article>
                 <h1 id="conclusion" class="header-article holder-bg">Заключение</h1>
@@ -152,19 +364,26 @@
                 <p id="link2"><i>[2] </i><a href="https://sourcemaking.com/design_patterns" target="_blank" class="ref-link">Source Making - Design Patterns</a>, последно посетено на</p>
                 <p id="link3"><i>[3] </i><a href="https://www.gofpatterns.com/design-patterns/module6/intro-behavioral-designPatterns.php" target="_blank" class="ref-link">Introduction to Behavioral Design Patterns</a>, последно посетено на</p>
                 <p id="link4"><i>[4] </i><a href="https://designpatternsphp.readthedocs.io/en/latest/Behavioral/README.html#" target="_blank" class="ref-link">Design Patterns in PHP</a> - официални имплементации на софтуерни шаблони в <i>PHP</i>, последно посетено на</p>
-                <p id="link2"><i>[5] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[6] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[7] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[8] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[9] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[10] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[11] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[12] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[13] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[14] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[15] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[16] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
-                <p id="link2"><i>[17] </i><a href="https://sourcemaking.com/design_patterns/chain_of_responsibility" target="_blank" class="ref-link">Source Making - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link5"><i>[5] </i><a href="https://refactoring.guru/design-patterns/chain-of-responsibility" target="_blank" class="ref-link">Refactoring Guru - Chain of Responsibility</a>, последно посетено на</p>
+                <p id="link6"><i>[6] </i><a href="https://refactoring.guru/design-patterns/command" target="_blank" class="ref-link">Refactoring Guru - Command</a>, последно посетено на</p>
+                <p id="link7"><i>[7] </i><a href="https://refactoring.guru/design-patterns/iterator" target="_blank" class="ref-link">Refactoring Guru - Iterator</a>, последно посетено на</p>
+                <p id="link8"><i>[8] </i><a href="https://refactoring.guru/design-patterns/mediator" target="_blank" class="ref-link">Refactoring Guru - Mediator</a>, последно посетено на</p>
+                <p id="link9"><i>[9] </i><a href="https://refactoring.guru/design-patterns/memento" target="_blank" class="ref-link">Refactoring Guru - Memento</a>, последно посетено на</p>
+                <p id="link10"><i>[10] </i><a href="https://refactoring.guru/design-patterns/observer" target="_blank" class="ref-link">Refactoring Guru - Observer</a>, последно посетено на</p>
+                <p id="link11"><i>[11] </i><a href="https://refactoring.guru/design-patterns/state" target="_blank" class="ref-link">Refactoring Guru - State</a>, последно посетено на</p>
+                <p id="link12"><i>[12] </i><a href="https://refactoring.guru/design-patterns/strategy" target="_blank" class="ref-link">Refactoring Guru - Strategy</a>, последно посетено на</p>
+                <p id="link13"><i>[13] </i><a href="https://refactoring.guru/design-patterns/template-method" target="_blank" class="ref-link">Refactoring Guru - Template Method</a>, последно посетено на</p>
+                <p id="link14"><i>[14] </i><a href="https://refactoring.guru/design-patterns/visitor" target="_blank" class="ref-link">Refactoring Guru - Visitor</a>, последно посетено на</p>
+                <p id="link15"><i>[15] </i><a href="https://refactoring.guru/design-patterns/chain-of-responsibility/php/example" target="_blank" class="ref-link">Refactoring Guru - Chain of Responsibility - Sample Code</a>, последно посетено на</p>
+                <p id="link16"><i>[16] </i><a href="https://refactoring.guru/design-patterns/command/php/example" target="_blank" class="ref-link">Refactoring Guru - Command - Sample Code</a>, последно посетено на</p>
+                <p id="link17"><i>[17] </i><a href="https://refactoring.guru/design-patterns/iterator/php/example" target="_blank" class="ref-link">Refactoring Guru - Iterator - Sample Code</a>, последно посетено на</p>
+                <p id="link18"><i>[18] </i><a href="https://refactoring.guru/design-patterns/mediator/php/example" target="_blank" class="ref-link">Refactoring Guru - Mediator - Sample Code</a>, последно посетено на</p>
+                <p id="link19"><i>[19] </i><a href="https://refactoring.guru/design-patterns/memento/php/example" target="_blank" class="ref-link">Refactoring Guru - Memento - Sample Code</a>, последно посетено на</p>
+                <p id="link20"><i>[20] </i><a href="https://refactoring.guru/design-patterns/observer/php/example" target="_blank" class="ref-link">Refactoring Guru - Observer - Sample Code</a>, последно посетено на</p>
+                <p id="link21"><i>[21] </i><a href="https://refactoring.guru/design-patterns/state/php/example" target="_blank" class="ref-link">Refactoring Guru - State - Sample Code</a>, последно посетено на</p>
+                <p id="link22"><i>[22] </i><a href="https://refactoring.guru/design-patterns/strategy/php/example" target="_blank" class="ref-link">Refactoring Guru - Strategy - Sample Code</a>, последно посетено на</p>
+                <p id="link23"><i>[23] </i><a href="https://refactoring.guru/design-patterns/template-method/php/example" target="_blank" class="ref-link">Refactoring Guru - Template Method - Sample Code</a>, последно посетено на</p>
+                <p id="link24"><i>[24] </i><a href="https://refactoring.guru/design-patterns/visitor/php/example" target="_blank" class="ref-link">Refactoring Guru - Visitor - Sample Code</a>, последно посетено на</p>
             </article>
         </main>
         <footer class="holder-bg">
