@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -105,15 +105,15 @@
                     <p>Съществува и малко по-различен подход (а и по-каноничен), при който ако <i>handler</i> реши, че може да обработи заявката, не я предава нататък по веригата. Т.е. или само един обработва заявката, или нито един. Този подход е често срещан при обработката на събития в един графичен потребителски интерфейс. Например, когато потребител натисне бутон, събитието травърсира нагоре по веригата от <i>GUI</i> елементи, която започва с него, минава през всички негови контейнери (форми, панели) и се озовава в главния прозорец. Събитието се обработва от първия елемент, който е способен да го направи. Хубавото на примера е, че показва как може да се изведе верига от дърво от обекти.</p>
                     <figure>
                         <img src="img/cor-04.png" alt="Tree of GUI elements"/>
-                        <figcaption>Фигура 4. Клон на дърво от <i>GUI</i> елементи. <a href="#link5">[5]</a></figcaption>
+                        <figcaption>Фигура 5. Клон на дърво от <i>GUI</i> елементи. <a href="#link5">[5]</a></figcaption>
                     </figure>
                     <p>Изключително важно е всички <i>handler</i> класове да имплементират един и същ интерфейс. Всеки конкретен <i>handler</i> обект се интересува само дали съседа му съдържа <code class="code-inline">execute</code> метод. По този начин може да изграждате вериги по време на изпълнение, използвайки различни <i>handler</i> без да бъдат тясно свързани с конкретните им класове.</p>
                 </section>
                 <section>
                     <h2 id="cor-structure">Структура</h2>
                     <figure>
-                        <img src="img/cor-05.png" alt="Chain of Responsibility Structure"/>
-                        <figcaption>Фигура 4. UML Диаграма на примерен <i>Chain of Responsibility</i>. <a href="#link2">[5]</a></figcaption>
+                        <img src="img/cor-05.png" alt="Chain of Responsibility UML diagram"/>
+                        <figcaption>Фигура 6. UML Диаграма на примерна <i><strong>Верига отговорности</strong></i>. <a href="#link2">[5]</a></figcaption>
                     </figure>
                     <ol>
                         <li><code class="code-inline">Handler</code>-ът декларира общ за всички обработващи обекти интерфейс. Обикновено съдържа един единствен метод за обработка на заявки, но понякога може да съдържа и метод за добавяне на следващия обект във веригата.</li>
@@ -124,12 +124,9 @@
                 </section>
                 <section>
                     <h2 id="cor-code-sample">Примерна имплементация</h2>
-                    <pre>
+                    <figure class="sample-code">
                         <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
-                        <code class="language-php">
-&lt;?php
-
-namespace RefactoringGuru\ChainOfResponsibility\Conceptual;
+                        <pre><code class="language-php">&lt;?php
 
 /**
  * Интерфейсът Handler декларира метод за изграждане на веригата от обработващи обекти.
@@ -246,14 +243,11 @@ echo "\n";
 echo "Subchain: Squirrel &gt; Dog\n\n";
 clientCode($squirrel);
 
-?&gt;
-                        </code>
-                        <figcaption>Код 1. Примерна имплементация на <i>Chain of Responsibility</i>. <a href="#link15">[15]</a></figcaption>
-                    </pre>
+?&gt;</code></pre>
+                        <figcaption>Код 1. Примерна имплементация на <i><strong>Верига отговорности</strong></i>. <a href="#link15">[15]</a></figcaption>
+                    </figure>
                     <p>Изпълнението на горния код би трябвало да доведе до следния изход:</p>
-                    <pre class="sample-output">
-                        <samp>
-Chain: Monkey &gt; Squirrel &gt; Dog
+                    <pre class="sample-output"><samp>Chain: Monkey &gt; Squirrel &gt; Dog
 
 Client: Who wants a Nut?
   Squirrel: I'll eat the Nut.
@@ -269,9 +263,7 @@ Client: Who wants a Nut?
 Client: Who wants a Banana?
   Banana was left untouched.
 Client: Who wants a Cup of coffee?
-  Cup of coffee was left untouched.
-                        </samp>
-                    </pre>
+  Cup of coffee was left untouched.</samp></pre>
                 </section>
             </article>
             <article>
@@ -281,17 +273,17 @@ Client: Who wants a Cup of coffee?
                     <p>Представете си, че работите върху нов текстов редактор. Токущата ви задача е да създадете лента с инструменти, която има куп бутони за най-различни операции в редактора. Създали сте клас <code class="code-inline">Button</code>, който може да се използва както за бутоните на лентата с инструменти, така и за различните диалогови прозорци.</p>
                     <figure>
                         <img src="img/command-01.png" alt="Button base class"/>
-                        <figcaption>Фигура 5. Бутони наследяващи един и същ клас. <a href="#link6">[6]</a></figcaption>
+                        <figcaption>Фигура 7. Бутони наследяващи един и същ клас. <a href="#link6">[6]</a></figcaption>
                     </figure>
                     <p>Въпреки че всички бутони изглеждат подобни, всеки един от тях извършва различни операции. Къде бихте поставили кода за различните <i>click handler</i>-и? Най-простото решение е да се създадат множество подкласове за всяко място, където е използван бутона, които да съдържат съответната функционалност при натискане на бутона.</p>
                     <figure>
                         <img src="img/command-02.png" alt="Button inheritance"/>
-                        <figcaption>Фигура 6. Множество подкласове на един базов бутон.  <a href="#link6">[6]</a></figcaption>
+                        <figcaption>Фигура 8. Множество подкласове на един базов бутон.  <a href="#link6">[6]</a></figcaption>
                     </figure>
                     <p>Бързо ще осъзнаете обаче, че този подход има сериозни недостатъци. Първо, ще имате огромен набор от подкласове, което по принцип би било наред, ако не рискувахте да се счупи нещо в тях при всяка модификация на базовия клас. Накратко, <i>GUI</i> кода е станал прекалено зависим на кода с бизнес логиката.</p>
                     <figure>
                         <img src="img/command-03.png" alt="Code duplication"/>
-                        <figcaption>Фигура 7. Дупликация на код измежду елементите.  <a href="#link6">[6]</a></figcaption>
+                        <figcaption>Фигура 9. Дупликация на код измежду елементите.  <a href="#link6">[6]</a></figcaption>
                     </figure>
                     <p>А ето и най-грозната част. Някои операции, например копиране/поставяне на текст, би трябвало да бъдат извикани от множество места. Примерно, потребител може да натисне бутона <i>Copy</i> на лентата с инструменти, да копира нещо през контекстното меню или просто да натисне <kbd>Ctrl + C.</kbd></p>
                     <p>В началото, когато приложението имаше само лентата с инструменти, нямаше проблем да се имплементират операциите в различни подкласове, т.е. кодът за копиране да се намира в <code class="code-inline">CopyButton</code> класа беше наред. Обаче, с добавянето на контекстните менюта, клавиатурните комбинации и други неща, се налага да дублирате кода на операцията в много класове или менютата да се направят подвластни на бутоните, което е още по-лошо.</p>
@@ -300,59 +292,1243 @@ Client: Who wants a Cup of coffee?
                     <h2 id="command-proposal">Предложение</h2>
                     <p>Добрият софтуерен дизайн се базира на приципа за разделяне на отговорностите, който обикновено означава разбиване на приложението на слоеве. Най-често срещания пример: слой за графичния потребителски интерфейс и друг слой за бизнес логиката. <i>GUI</i> слоят отговаря за рендерирането на картината, улавянето на вход от потребителя и показване на резултати, произтичащи от взаимодействието между потребителя и приложението. Обаче, когато става дума за нещо важно като изчисляване на траекторията на Луната или съставяне на годишен доклад, графичният слой делегира работата към съответния слой от бизнес логиката.</p>
                     <p>В код би изглеждало по следния начин: <i>GUI</i> обект извиква метод на обект от бизнес логиката, подавайки му някакви аругменти. Този процес по принцип се описва като изпращане на <i>заявка</i>.</p>
-                    <p><i><strong>Command</strong></i> шаблонът предполага, че <i>GUI</i> обектите не трябва да изпращат пряко тези заявки. Вместо това, трябва да се извличат детайлите от самата заявка, като обекта получател, името на метода и списък с аргументите, в отделен <i>command</i> клас, който има метод за изпълнение на тази заявка.</p>
-                    <p>Управляващите (<i>command</i>) обекти играят ролята на връзки между различните графични интерфейси и обектите с бизнес логиката. Оттук нататък, <i>GUI</i> обектът няма нужда да знае кой ще получи заявката му и как тя ще бъде преработена. Той просто задейства командата, която ще изпълни цялата работа.</p>
+                    <figure>
+                        <img src="img/command-04.png" alt="GUI objects access the business logic objects directly"/>
+                        <figcaption>Фигура 10. Директна връзка между потребителския интерфейс и бизнес логиката. <a href="#link6">[6]</a></figcaption>
+                    </figure>
+                    <p>Шаблонът <i><strong>Команда</strong></i> предполага, че <i>GUI</i> обектите не трябва да изпращат пряко тези заявки. Вместо това, трябва да се извличат детайлите от самата заявка, като обекта получател, името на метода и списък с аргументите, в отделен <i>команден</i> клас, който има метод за изпълнение на тази заявка.</p>
+                    <p>Командните обекти играят ролята на връзки между различните графични интерфейси и обектите с бизнес логиката. Оттук нататък, <i>GUI</i> обектът няма нужда да знае кой ще получи заявката му и как тя ще бъде преработена. Той просто задейства командата, която ще изпълни цялата работа.</p>
+                    <figure>
+                        <img src="img/command-05.png" alt="GUI objects access the business logic objects via command"/>
+                        <figcaption>Фигура 11. Командна връзка между потребителския интерфейс и бизнес логиката. <a href="#link6">[6]</a></figcaption>
+                    </figure>
                     <p>Следващата стъпка е управляващите обекти да имплементират един и същ интерфейс. По принцип той съдържа един метод за изпълнение, без аргументи. Интерфейсът служи за <i>decoupling</i> на различните обекти. По този начин можете да сменяте между различните управляващи обекти, свързани с подателя, ефективно изменяйки неговото поведение по време на изпълнение.</p>
                     <p>Може би сте забелязали, че изпуснахме аргументите на самата заявка. Това е така, защото се предполага, че командата ще бъде конфигурирана предварително с подходящите данни или ще бъде способна да се приспособи с тях.</p>
-                    <p>Нека се върнем на текстовия редактор. След прилагане на <i>Command</i> шаблона вече не са ни нужни всички онези подкласове бутони, които да имплементират различното поведения при натискане. Можем просто да добавим референция в базовия <code class="code-inline">Button</code> клас към командния обект и бутонът да го извиква при натискане.</p>
+                    <figure>
+                        <img src="img/command-06.png" alt="GUI objects delegate work to commands"/>
+                        <figcaption>Фигура 12. Графичния интерфейс делегира работата си към командите. <a href="#link6">[6]</a></figcaption>
+                    </figure>
+                    <p>Нека се върнем на текстовия редактор. След прилагане на шаблона <i><strong>Команда</strong></i> вече не са ни нужни всички онези подкласове бутони, които да имплементират различното поведения при натискане. Можем просто да добавим референция в базовия <code class="code-inline">Button</code> клас към командния обект и бутонът да го извиква при натискане.</p>
                     <p>Така за всяка възможна операция ще имплементирате управляващ клас, който да свържете със съответните бутони, в зависимост от тяхното предназначено поведение. Останалите <i>GUI</i> елементи (менюта, клавишни комбинации, цели диалози) могат да се имплементират по същия начин, избягвайки нежеланата дупликация на код.</p>
-                    <p>Като разултат, командите осигуряват удобен междинен слой, който намалява свързаността между графичния интерфейс и бизнес логиката.</p>
+                    <p>Като резултат, командите осигуряват удобен междинен слой, който намалява свързаността между графичния интерфейс и бизнес логиката.</p>
                 </section>
                 <section>
                     <h2 id="command-structure">Структура</h2>
                     <figure>
-                        <img src="img/.png" alt=""/>
-                        <figcaption> <a href="#link">[]</a></figcaption>
+                        <img src="img/command-07.png" alt="Command UML diagram"/>
+                        <figcaption>Фигура 13. UML диаграма на шаблона Команда. <a href="#link6">[6]</a></figcaption>
                     </figure>
                     <ol>
+                        <li>Класът подател <code class="code-inline">Sender</code> (в нашия случай <code class="code-inline">Invoker</code>) има грижата да инициира заявките. Този клас държи референция към командния обект, чиято команда използва за комуникация с получателя. Добре е да се отбележи, че по принцип подателят не отговаря за създаването на командния обект, за това се грижи клиентът.</li>
+                        <li>Интерфейсът <code class="code-inline">Command</code> обикновено съдържа единствен метод за изпълнение на командата.</li>
+                        <li>Конкретни команди имплементират най-различни видове заявки. Тяхната задача не е да изпълняват самата команда, а да извикат обект от бизнес логиката, който има тази грижа. Често за опростяване на кода тези два обекта могат да се слеят. Нужните параметри за изпълнение на метод от получателя могат да се декларират като полета в конкретните команди. Също могат да се направят <i>immutable</i> като се инициализират само в конструктура</li>
+                        <li>Класът <code class="code-inline">Receiver</code> съдържа някаква бизнес логика, той може да бъде всякакъв обект. Повечето команди просто предават заявката към него, а той от своя страна върши същинската работа.</li>
+                        <li>Клиентът (<code class="code-inline">Client</code>) създава и настройва конкретните командни обекти, като ги инициализира с необходимите параметри и съответния получател чрез констурктора. След което може да ги навърже с няколко податели.</li>
                     </ol>
                 </section>
                 <section>
                     <h2 id="command-code-sample">Примерна имплементация</h2>
-                    <pre>
+                    <figure class="sample-code">
                         <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
-                        <code class="language-php">
-                        </code>
-                        <figcaption>Код . Примерна имплементация на <i></i>. <a href="#link">[]</a></figcaption>
-                    </pre>
+                        <pre><code class="language-php">&lt;?php
+
+/**
+ * Command интерфейсът декларира метод за изпълнение на команда.
+ */
+interface Command
+{
+    public function execute(): void;
+}
+
+/**
+ * Някои команди може да имплементират проста бизнес логика.
+ */
+class SimpleCommand implements Command
+{
+    private $payload;
+
+    public function __construct(string $payload)
+    {
+        $this-&gt;payload = $payload;
+    }
+
+    public function execute(): void
+    {
+        echo "SimpleCommand: See, I can do simple things like printing (" . $this-&gt;payload . ")\n";
+    }
+}
+
+/**
+ * Някои команди може да делегират по-сложни операции към други обекти получатели.
+ */
+class ComplexCommand implements Command
+{
+    /**
+     * @var Receiver
+     */
+    private $receiver;
+
+    /**
+     * Данни, нужни за изпълняването на методите на получателя.
+     */
+    private $a;
+
+    private $b;
+
+    /**
+     * Сложните команди може да приемат един или няколко обекти-получатели
+     * заедно с необходимите контекстни данни чрез конструктура.
+     */
+    public function __construct(Receiver $receiver, string $a, string $b)
+    {
+        $this-&gt;receiver = $receiver;
+        $this-&gt;a = $a;
+        $this-&gt;b = $b;
+    }
+
+    /**
+     * Командите могат да делегират към който и да е метод на получателя.
+     */
+    public function execute(): void
+    {
+        echo "ComplexCommand: Complex stuff should be done by a receiver object.\n";
+        $this-&gt;receiver-&gt;doSomething($this-&gt;a);
+        $this-&gt;receiver-&gt;doSomethingElse($this-&gt;b);
+    }
+}
+
+/**
+ * Receiver класовете съдържат важната бизнес логика. Те знаят как да
+ * изпълняват всякакви операции, свързани с изпълняването на някаква заявка.
+ * Всъщност, всеки клас може да играе ролята на Receiver.
+ */
+class Receiver
+{
+    public function doSomething(string $a): void
+    {
+        echo "Receiver: Working on (" . $a . ".)\n";
+    }
+
+    public function doSomethingElse(string $b): void
+    {
+        echo "Receiver: Also working on (" . $b . ".)\n";
+    }
+}
+
+/**
+ * Invoker е закачен за една или няколко команди, към които да препраща заявките.
+ */
+class Invoker
+{
+    /**
+     * @var Command
+     */
+    private $onStart;
+
+    /**
+     * @var Command
+     */
+    private $onFinish;
+
+    /**
+     * Инициализация на командите.
+     */
+    public function setOnStart(Command $command): void
+    {
+        $this-&gt;onStart = $command;
+    }
+
+    public function setOnFinish(Command $command): void
+    {
+        $this-&gt;onFinish = $command;
+    }
+
+    /**
+     * Invoker класът не е подзависим на конкретните команди или класовете-получатели.
+     * Той просто подава заявката индиректно на получателя чрез изпълнението команда.
+     */
+    public function doSomethingImportant(): void
+    {
+        echo "Invoker: Does anybody want something done before I begin?\n";
+        if ($this-&gt;onStart instanceof Command) {
+            $this-&gt;onStart-&gt;execute();
+        }
+
+        echo "Invoker: ...doing something really important...\n";
+
+        echo "Invoker: Does anybody want something done after I finish?\n";
+        if ($this-&gt;onFinish instanceof Command) {
+            $this-&gt;onFinish-&gt;execute();
+        }
+    }
+}
+
+/**
+ * Клиентският код може да параметризира Invoker с всякакви команди.
+ */
+$invoker = new Invoker();
+$invoker-&gt;setOnStart(new SimpleCommand("Say Hi!"));
+$receiver = new Receiver();
+$invoker-&gt;setOnFinish(new ComplexCommand($receiver, "Send email", "Save report"));
+
+$invoker-&gt;doSomethingImportant();
+
+?&gt;</code></pre>
+                        <figcaption>Код 2. Примерна имплементация на <i><strong>Команда</strong></i> в <i>PHP</i>. <a href="#link16">[16]</a></figcaption>
+                    </figure>
                     <p>Изпълнението на горния код би трябвало да доведе до следния изход:</p>
-                    <pre class="code-output">
-                    </pre>
+                    <pre class="sample-output"><samp>Invoker: Does anybody want something done before I begin?
+SimpleCommand: See, I can do simple things like printing (Say Hi!)
+Invoker: ...doing something really important...
+Invoker: Does anybody want something done after I finish?
+ComplexCommand: Complex stuff should be done by a receiver object.
+Receiver: Working on (Send email.)
+Receiver: Also working on (Save report.)</samp></pre>
                 </section>
             </article>
             <article>
-                <h1 id="iterator" class="header-article holder-bg pattern">Итератор (Iterator)</h1>
+                <h1 id="iterator-title" class="header-article holder-bg pattern">Итератор (Iterator)</h1>
+                <section>
+                    <h2 id="iterator-problem">Казус</h2>
+                    <p>Колекциите са едни от най-използваните структури от данни в програмирането. Въпреки това, те просто представляват някакъв контейнер за група от обекти.</p>
+                    <figure>
+                        <img src="img/Iterator-01.png" alt="Collections types"/>
+                        <figcaption>Фигура 14. Видове колекции. <a href="#link7">[7]</a></figcaption>
+                    </figure>
+                    <p>Повечето колекции съхраняват елементите си в прости списъци. Други, обаче, са базирани на стекове, дървета, графи и други комплексни структури от данни.</p>
+                    <p>Независимо от структурата на една колекция, тя трябва да предостави някакъв начин за достъп до елементите ѝ от останалата част от кода. Трябва да съществува начин за обхождане на всички елементи без да се минава повторно по някой от тях.</p>
+                    <p>Това може да звучи доста тривиално за имплементация при списък базираните колекции - просто циклим по всички елементи. Но как се траверсира последователно по сложна структура от данни, подобна на дърво? Например, един ден може да ви е достатъчно да използвате траверс в дълбочина, а на следващия ден - да ви се налага траверс в широчина. А пък следващата седмица да имате нужда от нещо друго, като произволен достъп до елементите на дървото.</p>
+                    <figure>
+                        <img src="img/iterator-02.png" alt="Ways to travers a tree"/>
+                        <figcaption>Фигура 15. Начини за траверс по дърво. <a href="#link7">[7]</a></figcaption>
+                    </figure>
+                    <p>Добавянето на все повече и повече алгоритми за траверс към колекцията евентуално избледнява основната ѝ отговорност - ефективното съхранение на данни. Допълнително, някои алгоритми може да са предназначени за определени приложения, та включването им в общия клас на колекцията би било странно.</p>
+                    <p>От друга страна, клиентският код може изобщо да не се интересува как използвани различни колекции съхраняват елементите си. Въпреки това, тъй като колекциите предоставят различни начини за достъп до елементите си, нямате избор освен да обвържете кода си със специфичните класове.</p>
+                </section>
+                <section>
+                    <h2 id="iterator-proposal">Предложение</h2>
+                    <p>Основната идея на шаблонът <i><strong>Итератор</strong></i> е да извлече траверсното поведение на колекция в отделен обект, наречен <i><strong>итератор</strong></i> (<i>iterator</i>).</p>
+                    <figure>
+                        <img src="img/iterator-03.png" alt="Iterators implementing various traversal algorithms"/>
+                        <figcaption>Фигура 16. Итератори, имплементиращи различни видове траверс на колекции. <a href="#link7">[7]</a></figcaption>
+                    </figure>
+                    <p>В допълнение към имплементиране на самия алгоритъм, итераторът енкапсулира всички траверсни детайли, в това число влизат текущата позиция и колко елементи остават до края. Поради тази причина множество итератори могат да обхождат същата колекция паралелно и независимо един от друг.</p>
+                    <p>Обикновено итераторите предоставят един главен метод за извличане на елементите от колекцията. Клиентът може непрестанно да вика този метод, докато той вече не връща нищо, т.е. итераторът е минал през всички елементи.</p>
+                    <p>Всички итератори трябва да имплементират същия интерфейс. Това позволява съвместимост между клиентския код и всякакъв вид колекции или траверсни алгоритми, стига да съществува подходящ итератор. Ако имате нужда от специален начин за обхождане, можете просто да си създадете нов итераторски клас без да променяте колекцията или клиента.</p>
+                </section>
+                <section>
+                    <h2 id="iterator-structure">Структура</h2>
+                    <figure>
+                        <img src="img/iterator-04.png" alt="Iterator UML diagram"/>
+                        <figcaption>Фигура 17. UML Диаграма на шаблона <i><strong>Итератор</strong></i>. <a href="#link7">[7]</a></figcaption>
+                    </figure>
+                    <ol>
+                        <li>Интерфейсът <code class="code-inline">Iterator</code> декларира операции, необходими за обхождане на колекция: извличане на следващ елемент, получаване на текуща позиция, рестарт на итерацията и т.н.</li>
+                        <li>Конкретните итератори (<code class="code-inline">ConcreteIterator</code>) имплементират специфични алгоритми за обхождане на колекции. Всеки итерато трябва да следи прогреса си. Това позволява независим траверс на колекция от множество итератори.</li>
+                        <li>Интерфейсът <code class="code-inline">Collection</code> декларира един или няколко метода за съгласуване на итератори с колекцията.</li>
+                        <li>Конкретните колекции (<code class="code-inline">ConcreteCollection</code>) връщат нови инстанции на конкретни итератори, всеки път когато на клиента му потрябват.</li>
+                        <li>Клиентът (<code class="code-inline">Client</code>) използва интерфейсите на итераторите и колекциите. По този начин той не е тясно обвързан с конкретни класове, позволявайки му да използва различни колекции и итератори със същия клиентски код. По принцип клиентът използва итератори, предоставени му от колекциите, но в някои случаи той може и само да си направи итератор.</li>
+                    </ol>
+                </section>
+                <section>
+                    <h2 id="iterator-code-sample">Примерна имплементация</h2>
+                    <figure class="sample-code">
+                        <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
+                        <pre><code class="language-php">&lt;?php
+
+/**
+ * Конкретните итератори имплементират разнообразни траверсни алгоритми.
+ * Тези класове съхраняват текущата позиция на итератора по всяко време.
+ */
+class AlphabeticalOrderIterator implements \Iterator
+{
+    /**
+     * @var WordsCollection
+     */
+    private $collection;
+
+    /**
+     * @var int
+     * Съхранява текущата позиция при обхождане. Итератор може да има
+     * много други полета за определяне на текущото състояние, особено когато
+     * се налага да взаимодейства с определен вид колекции.
+     */
+    private $position = 0;
+
+    /**
+     * @var bool
+     * Тази променлива обозначава посоката на траверс.
+     */
+    private $reverse = false;
+
+    public function __construct($collection, $reverse = false)
+    {
+        $this-&gt;collection = $collection;
+        $this-&gt;reverse = $reverse;
+    }
+
+    public function rewind()
+    {
+        $this-&gt;position = $this-&gt;reverse ?
+            count($this-&gt;collection-&gt;getItems()) - 1 : 0;
+    }
+
+    public function current()
+    {
+        return $this-&gt;collection-&gt;getItems()[$this-&gt;position];
+    }
+
+    public function key()
+    {
+        return $this-&gt;position;
+    }
+
+    public function next()
+    {
+        $this-&gt;position = $this-&gt;position + ($this-&gt;reverse ? -1 : 1);
+    }
+
+    public function valid()
+    {
+        return isset($this-&gt;collection-&gt;getItems()[$this-&gt;position]);
+    }
+}
+
+/**
+ * Конкретните колекции предоставят един или повече метода за създаване
+ * на нови итераторни инстанции, съвместими с класа на колекцията.
+ */
+class WordsCollection implements \IteratorAggregate
+{
+    private $items = [];
+
+    public function getItems()
+    {
+        return $this-&gt;items;
+    }
+
+    public function addItem($item)
+    {
+        $this-&gt;items[] = $item;
+    }
+
+    public function getIterator(): Iterator
+    {
+        return new AlphabeticalOrderIterator($this);
+    }
+
+    public function getReverseIterator(): Iterator
+    {
+        return new AlphabeticalOrderIterator($this, true);
+    }
+}
+
+/**
+ * Клиентският код може и да не знае за конкретните итератори/колекции,
+ * това зависи от нивото на индиректност, което искате да има програмата ви.
+ */
+$collection = new WordsCollection();
+$collection-&gt;addItem("First");
+$collection-&gt;addItem("Second");
+$collection-&gt;addItem("Third");
+
+echo "Straight traversal:\n";
+foreach ($collection-&gt;getIterator() as $item) {
+    echo $item . "\n";
+}
+
+echo "\n";
+echo "Reverse traversal:\n";
+foreach ($collection-&gt;getReverseIterator() as $item) {
+    echo $item . "\n";
+}
+
+?&gt;</code></pre>
+                        <figcaption>Код 3. Примерна имплементация на <i><strong>Итератор</strong></i> в <i>PHP</i>. <a href="#link17">[17]</a></figcaption>
+                    </figure>
+                    <p>Изпълнението на горния код би трябвало да доведе до следния изход:</p>
+                    <pre class="sample-output"><samp>Straight traversal:
+First
+Second
+Third
+
+Reverse traversal:
+Third
+Second
+First</samp></pre>
+                </section>
             </article>
             <article>
-                <h1 id="mediator" class="header-article holder-bg pattern">Посредник (Mediator)</h1>
+                <h1 id="mediator-title" class="header-article holder-bg pattern">Посредник (Mediator)</h1>
+                <section>
+                    <h2 id="mediator-problem">Казус</h2>
+                    <p>Да речем, че имате диалогов прозорец за създаване и редактиране на клиентски профили. Той съдържа разнообразни контроли като например текстови полета, квадратчета за отметки, бутони и т.н.</p>
+                    <figure>
+                        <img src="img/mediator-01.png" alt="Relations between elements of a dialog"/>
+                        <figcaption>Фигура 18. Хаос от връзки между елементите в диалогов прозорец. <a href="#link8">[8]</a></figcaption>
+                    </figure>
+                    <p>Някои от елементите може да взаимодействат с други. Например, поставянето на отметка в квадратчето за "Имам куче" може да открива скрито поле за въвеждане на името на кучето. Друг пример е <i>Submit</i> бутона, който трябва да валидира всички полета преди да запази данните.</p>
+                    <figure>
+                        <img src="img/mediator-02.png" alt="Coupling between elements"/>
+                        <figcaption>Фигура 19. Зависимост между отделните елементи. <a href="#link8">[8]</a></figcaption>
+                    </figure>
+                    <p>Имплементирайки тази логика директно в кода на елементите от формата, възпрепятствате преизползването им в други форми от приложението. Например, няма да можете да използвате същата кутийка за тикче в друга форма, защото е обвързана с полето за името на кучето.</p>
+                </section>
+                <section>
+                    <h2 id="mediator-proposal">Предложение</h2>
+                    <p>Шаблонът <i><strong>Посредник</strong></i> предполага, че ще прекъснете всякаква директна комуникация между компонентите, които искате да изолирате едни от други. Напротив, тези компоненти трябва да си взаимодействат посредством междинен обект, който пренасочва съобщенията към правилните компоненти. В резултат на това, те ще разчитат само на един единствен клас, вместо да бъдат тясно обвързани със своите колеги.</p>
+                    <p>В нашия пример с формата за редакция на профила класът на диалоговия прозорец сам по себе си може да играе ролята на медиатор. Най-вероятно той вече е наясно кои са поделементите му, та няма да ви се налага да добавяте нови зависимости в този клас.</p>
+                    <figure>
+                        <img src="img/mediator-03.png" alt="Dialog elements communicating via the dialog"/>
+                        <figcaption>Фигура 20. Диалоговите елементи си комуникират чрез медиатор. <a href="#link8">[8]</a></figcaption>
+                    </figure>
+                    <p>Най-важната промяна е в самите елементи от формата. Нека разгледаме <i>Submit</i> бутона: преди всеки път, когато потребителят го натиснеше, бутонът трябваше да валидира стойностите на другите елементи, обаче сега единствената му задача е да информира диалоговия прозорез за кликването, който от своя страна извършва цялата тази работа.</p>
+                    <p>Може да доразвиете зависимостта и да я направите още по хлабава като изградите общ интерфейс за различните диалози. Този интерфейс ще декларира метод за нотификациите, който елементите ще използват за комуникация.</p>
+                    <p>По този начин шаблонът ви позволява да енкапсулирате сложна мрежа от връзки между разнообразни обекти в един междинен такъв. Колкото по-малко зависимости има един клас, толкова по-лесно е модифицирането, разширяването или използването му.</p>
+                </section>
+                <section>
+                    <h2 id="mediator-structure">Структура</h2>
+                    <figure>
+                        <img src="img/mediator-04.png" alt="Mediator UML diagram"/>
+                        <figcaption>Фигура 21. UML Диаграма на шаблона <i><strong>Посредник</strong></i>. <a href="#link8">[8]</a></figcaption>
+                    </figure>
+                    <ol>
+                        <li>Компонентите (<code class="code-inline">ComponentA/B/C/D</code>) са класове, съдържащи някаква бизнес логика. Всеки компонент държи референция към посредник, деклариран с типа на интерфейса. Компонентите не знаят за самия клас на посредника, т.е. може да преизползвате компонента в други програми с различен посредник.</li>
+                        <li>Посредниковият интерфейс <code class="code-inline">Mediator</code> декларира методи за комуникация с компонентите, по принцип метода е само един - за известяване. Компонентите могат да подават всякакви аргументи към този метод, включително и собствени обекти, но по такъв начин, че не настъпва зависимост между подател и получател.</li>
+                        <li>Конкретните посредници <code class="code-inline">ConcreteMediator</code> енкапсулират връзките между различните компоненти. Често пазят референции към всички компоненти, които управляват, а понякога и контролират жизнения им цикъл.</li>
+                        <li>Компонентите не трябва да знаят за останалите такива. Всяко събитие в един компонент трябва да се съобщава само и единствено на посредника, който от своя страна лесно може да идентифицира подателя и да реши какво да прави. От перспективата на компонента всичко е една черна кутия.</li>
+                    </ol>
+                </section>
+                <section>
+                    <h2 id="mediator-code-sample">Примерна имплементация</h2>
+                    <figure class="sample-code">
+                        <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
+                        <pre><code class="language-php">&lt;?php
+
+/**
+ * Посредник (Mediator) интерфейсът декларира метод, използван от компонентите за известяване
+ * относно различни събития. Посредникът може да въздейства на тях или да предаде изпълнението
+ * на други компоненти.
+ */
+interface Mediator
+{
+    public function notify(object $sender, string $event): void;
+}
+
+/**
+ * Конкретните посредници имплементират кооперативно поведение,
+ * координирайки няколко компонента.
+ */
+class ConcreteMediator implements Mediator
+{
+    private $component1;
+
+    private $component2;
+
+    public function __construct(Component1 $c1, Component2 $c2)
+    {
+        $this-&gt;component1 = $c1;
+        $this-&gt;component1-&gt;setMediator($this);
+        $this-&gt;component2 = $c2;
+        $this-&gt;component2-&gt;setMediator($this);
+    }
+
+    public function notify(object $sender, string $event): void
+    {
+        if ($event == "A") {
+            echo "Mediator reacts on A and triggers following operations:\n";
+            $this-&gt;component2-&gt;doC();
+        }
+
+        if ($event == "D") {
+            echo "Mediator reacts on D and triggers following operations:\n";
+            $this-&gt;component1-&gt;doB();
+            $this-&gt;component2-&gt;doC();
+        }
+    }
+}
+
+/**
+ * Базовия компонент предоставя съхраняването на посредниковата инстанция
+ * в обектите на компонентите.
+ */
+class BaseComponent
+{
+    protected $mediator;
+
+    public function __construct(Mediator $mediator = null)
+    {
+        $this-&gt;mediator = $mediator;
+    }
+
+    public function setMediator(Mediator $mediator): void
+    {
+        $this-&gt;mediator = $mediator;
+    }
+}
+
+/**
+ * Конкретните компоненти имплементират разнообразни функционалности.
+ * Те не зависят едни на други. Съща така не разчитат на конкретни посредници.
+ */
+class Component1 extends BaseComponent
+{
+    public function doA(): void
+    {
+        echo "Component 1 does A.\n";
+        $this-&gt;mediator-&gt;notify($this, "A");
+    }
+
+    public function doB(): void
+    {
+        echo "Component 1 does B.\n";
+        $this-&gt;mediator-&gt;notify($this, "B");
+    }
+}
+
+class Component2 extends BaseComponent
+{
+    public function doC(): void
+    {
+        echo "Component 2 does C.\n";
+        $this-&gt;mediator-&gt;notify($this, "C");
+    }
+
+    public function doD(): void
+    {
+        echo "Component 2 does D.\n";
+        $this-&gt;mediator-&gt;notify($this, "D");
+    }
+}
+
+/**
+ * Клиентският код.
+ */
+$c1 = new Component1();
+$c2 = new Component2();
+$mediator = new ConcreteMediator($c1, $c2);
+
+echo "Client triggers operation A.\n";
+$c1-&gt;doA();
+
+echo "\n";
+echo "Client triggers operation D.\n";
+$c2-&gt;doD();
+
+?&gt;</code></pre>
+                        <figcaption>Код 4. Примерна имплементация на <i><strong>Посредник</strong></i> в <i>PHP</i>. <a href="#link18">[18]</a></figcaption>
+                    </figure>
+                    <p>Изпълнението на горния код би трябвало да доведе до следния изход:</p>
+                    <pre class="sample-output"><samp>Client triggers operation A.
+Component 1 does A.
+Mediator reacts on A and triggers following operations:
+Component 2 does C.
+
+Client triggers operation D.
+Component 2 does D.
+Mediator reacts on D and triggers following operations:
+Component 1 does B.
+Component 2 does C.</samp></pre>
+                </section>
             </article>
             <article>
-                <h1 id="memento" class="header-article holder-bg pattern">Спомен (Memento)</h1>
+                <h1 id="memento-title" class="header-article holder-bg pattern">Спомен (Memento)</h1>
+                <section>
+                    <h2 id="memento-problem">Казус</h2>
+                    <p>Представете си, че разработвате текстов редактор. В допълнение към редакцията на текст редакторът може да форматира текст, да вмъква изображения и т.н.</p>
+                    <p>В някакъв момент решавате да позволите на потребителите да отменят направени операции. Тази функционалност е станала толкова популарна през годините, че в наши дни хората очакват всяко приложение да я има. За имплементацията се позовавате на директния метод - преди изпълняване на операция приложението записва текущото състояние на всички обекти и го запазва в някакво хранилище, а по-късно, когато потребителят реши да отмени операция, приложението извлича последния статус от историята и възвръща състоянието на всички обекти.</p>
+                    <figure>
+                        <img src="img/memento-01.png" alt="State snapshot"/>
+                        <figcaption>Фигура 22. Запазване на текущото състояние преди операция. <a href="#link9">[9]</a></figcaption>
+                    </figure>
+                    <p>Нека да разгледаме тия моментни снимки. Как точно ще бъдат създадени? Сигурно ще ви се наложи да обиколите всички полета на всеки обект и да копирате стойностите в паметта. Обаче, това би проработило само ако всеки обект има доста ниски рестрикции откъм атрибутите си, което на практика не е така.</p>
+                    <p>Нека пренебрегнем този проблем за сега и да предположим, че всеки обект се държи като хипи: предпочита отворените връзки и състоянието му е публично. Макар този подход да решава текущия проблем, все още има сериозни недостатъци. В бъдеще може да решите да рефакторирате част от редактиращите класове или да добавите/премахнете някои полета. Звучи лесно, но това предполага промяна на класовете, отговорни за копиране на състоянието на засегнатите обекти.</p>
+                    <figure>
+                        <img src="img/memento-02.png" alt="Unable to copy private state"/>
+                        <figcaption>Фигура 23. Енкапсулирано състояние на обект. <a href="#link9">[9]</a></figcaption>
+                    </figure>
+                    <p>Но това не е всичко. Нека да разгледаме самите "моментни снимки" на състоянието на редактора. Какви данни съдържат те? Минималното би било самия текст, координатите на курсора, текущата позиция на <i>scroll</i>-а и т.н. За направата на моментната снимка трябва да съберете всички тези данни в някакъв контейнер.</p>
+                    <p>Вероятно ще ви се наложи да съхранявате множество такива контейнери в някакъв списък като история на операциите. Т.е. контейнерите ще съдържат обекти от един клас, който няма да има методи, а много полета, отразяващи състоянието на редактора. Достъпа до полетата би трябвало да е публичен, нарушавайки енкапсулацията. Другите класове биха станали зависими на най-малката промяна в класа на моментната снимка.</p>
+                    <p>Изглежда достигнахме до задънена улица: или излагате на външния свят всички вътрешни детайли на класовете, правейки ги прекалено крехки, или ограничавате достъпа до състоянието им, което прави невъзможно създаването на моментни снимки. Та има ли друг начин за имплементация на командата "отмяна"?</p>
+                </section>
+                <section>
+                    <h2 id="memento-proposal">Предложение</h2>
+                    <p>Всички проблеми, които срещнахме, са породени от счупена енкапсулация. Някои обекти с опитват да вършат повече, отколкото им се полага. За събирането на данните за някакво действие им се налага да навлизат в личното пространство на други обекти, вместо да им отдадат честта те да го извършат.</p>
+                    <p>Шаблонът <i><strong>Спомен</strong></i> гласи, че моментните снимки ще се създават от самите им притежатели, обектите <i>източници</i>. По този начин, вместо други обекти да се мъчат да копират състоянието на редактора "отвън", самия редакторски клас може да направи моментната снимка, тъй като има достъп до собственото си състояние.</p>
+                    <p>Шаблонът предполага съхранението на копие от обектното състояние в специален обект наречен <i>спомен</i>, чието съдържание не е достъпно до останалите обекти, с изключение на този, който го създава. Другите обекти трябва да комуникират чрез спомени, използвайки ограничен интерфейс, позволяващ извличането на метаданните на моментната снимка (време на създаване, име на операцията, т.н.), а не началното състояние на обекта в нея.</p>
+                    <figure>
+                        <img src="img/memento-03.png" alt="Use of memento interface"/>
+                        <figcaption>Фигура 24. Създателят има достъп до спомен, останалите ползват интерфейса. <a href="#link9">[9]</a></figcaption>
+                    </figure>
+                    <p>Подобна ограничителна полица позволява съхранението на спомени в други обекти, обикновено наречени <i>уредници</i> (<i>caretakers</i>). Тъй като уредникът достъпва спомена само през ограничения интерфейс, няма възможността да прави мръсотии по запазеното състояние. В същия момент, създателят има пълен достъп до полетата в спомена, позволявайки му да възстанови предишното състояние.</p>
+                    <p>В нашия текстови редактор можем да създадем отделен клас история като уредник. Стек от спомени, съхранявани в уредника, ще расте с всяка изпълнена от редактора операция. Можете даже да изобразявате този стек в потребителския интерфейс на приложението. Когато потребител изпълни отмяната, историята грабва най-скорошния спомен от стека и го подава обратно към редактора, карайки го да възвърне състоянието.</p>
+                </section>
+                <section>
+                    <h2 id="memento-structure">Структура</h2>
+                    <section>
+                        <h3>Имплементация, базирана на вложени класове</h3>
+                        <p>Класическата имплементация на шаблона разчита на поддръжка на класово влагане, налично в доста популярни програмни езици (C++, C#, Java и т.н.)</p>
+                        <figure>
+                            <img src="img/memento-04.png" alt="Memento UML diagram"/>
+                            <figcaption>Фигура 25. UML Диаграма на шаблона <i><strong>Спомен</strong></i> с класово влагане. <a href="#link9">[9]</a></figcaption>
+                        </figure>
+                        <ol>
+                            <li>Класът създател <code class="code-inline">Originator</code> може да създава моментни снимки на своето състояние, също и да го възстановява от тях.</li>
+                            <li><code class="code-inline">Memento</code> е обект стойност, който играе роля на моментната снимка на създателя. Добра практика е споменът да е неизменчив, т.е. данните му се дават само през конструктора.</li>
+                            <li><code class="code-inline">Caretaker</code> знае не само "кога" и "защо" да запази състоянието на създателя, но и кога то да бъде възстановено.</li>
+                            <li>В тази имплементация класът за спомен е вложен в създателя. Това позволява на създателя да достъпва полетата и методите му, въпреки че са <i>private</i>. От друга страна, уредникът е ограничен откъм това и няма как да прави поразии.</li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h3>Имплементация, базирана на междинен интерфейс</h3>
+                        <p>Съществува алтернативна имплементация, подходяща за програмни езици, които не поддържат класово влагане (хм, PHP)</p>
+                        <figure>
+                            <img src="img/memento-05.png" alt="Memento UML diagram"/>
+                            <figcaption>Фигура 26. UML Диаграма на шаблона <i><strong>Спомен</strong></i> с междинен интерфейс. <a href="#link9">[9]</a></figcaption>
+                        </figure>
+                        <ol>
+                            <li>При липса на вложени класове можете да ограничите достъпа до полетата на спомена като установите конвенцията, че уредникът може да работи със спомена само чрез определен интерфейс, който да предоставя само метаданни.</li>
+                            <li>От друга страна, създателите могат директно могат да достъпват полетата на спомена, с недостатъка че те ще трябва да са публични.</li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h3>Имплементация с по-строга енкапсулация</h3>
+                        <p>Има още една имплементация, която е полезна, когато не желаете да осигурявате дори и най-малкия шанс за достъп до състоянието на създателя през спомена.</p>
+                        <figure>
+                            <img src="img/memento-06.png" alt="Memento UML diagram"/>
+                            <figcaption>Фигура 27. UML Диаграма на шаблона <i><strong>Спомен</strong></i> с по-строга енкапсулация. <a href="#link9">[9]</a></figcaption>
+                        </figure>
+                        <ol>
+                            <li>Тази имплементация позволява съществуване на множество видове създатели и спомени. Всеки създател работи с определен спомен, като нито единия, нито другия си излага публично състоянието.</li>
+                            <li>Уредниците сега са явно ограничени откъм промяна по състоянието в спомените. Допълнително, класът на уредниците е независим от създателя, защото възстановяващият метод е дефиниран в класа на спомена.</li>
+                            <li>Всеки спомен е свързан със създателя си, който от своя страна подава себе си към конструктура на спомена заедно със стойностите на състоянието си. Благодарение на това, споменът може да възстанови състоянието на създателя, стига да има дефинирани подходящи сетъри.</li>
+                        </ol>
+                    </section>
+                </section>
+                <section>
+                    <h2 id="-code-sample">Примерна имплементация</h2>
+                    <figure class="sample-code">
+                        <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
+                        <pre><code class="language-php">&lt;?php
+
+/**
+ * Създателят държи някакво важно състояние, което може да се измени с времето.
+ * Той също дефинира метод за запазване на текущото такова в спомен и друг метод -
+ * за неговото възстановяване.
+ */
+class Originator
+{
+    /**
+     * @var string
+     * С цел простота, състоянието на създателя се пази в една променлива.
+     */
+    private $state;
+
+    public function __construct(string $state)
+    {
+        $this-&gt;state = $state;
+        echo "Originator: My initial state is: {$this-&gt;state}\n";
+    }
+
+    /**
+     * Бизнес логиката на създателя може да промени вътрешното му състояние.
+     * Следователно, клиентът трябва да архивира състоянието му преди да
+     * извъква методи от бизнес логиката чрез save() метода.
+     */
+    public function doSomething(): void
+    {
+        echo "Originator: I'm doing something important.\n";
+        $this-&gt;state = $this-&gt;generateRandomString(30);
+        echo "Originator: and my state has changed to: {$this-&gt;state}\n";
+    }
+
+    private function generateRandomString(int $length = 10): string
+    {
+        return substr(
+            str_shuffle(
+                str_repeat(
+                    $x = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                    ceil($length / strlen($x))
+                )
+            ),
+            1,
+            $length,
+        );
+    }
+
+    /**
+     * Запазва текущото състояние в спомен.
+     */
+    public function save(): Memento
+    {
+        return new ConcreteMemento($this-&gt;state);
+    }
+
+    /**
+     * Възстановява състоянието на създателя от спомен.
+     */
+    public function restore(Memento $memento): void
+    {
+        $this-&gt;state = $memento-&gt;getState();
+        echo "Originator: My state has changed to: {$this-&gt;state}\n";
+    }
+}
+
+/**
+ * Memento интерфейсът предоставя начин за извличане на метаданните на спомена,
+ * които биват дата на създаване или име, без обаче да разкрива състоянието на създателя.
+ */
+interface Memento
+{
+    public function getName(): string;
+
+    public function getDate(): string;
+}
+
+/**
+ * Конкретния спомен съдържа инфраструктура за съхраняване на състоянието на създателя.
+ */
+class ConcreteMemento implements Memento
+{
+    private $state;
+
+    private $date;
+
+    public function __construct(string $state)
+    {
+        $this-&gt;state = $state;
+        $this-&gt;date = date('Y-m-d H:i:s');
+    }
+
+    /**
+     * Създателят използва този метод при възстановяване на състоянието си.
+     */
+    public function getState(): string
+    {
+        return $this-&gt;state;
+    }
+
+    /**
+     * Остатъка от методите се използват от уредника за изобразяване на метаданните.
+     */
+    public function getName(): string
+    {
+        return $this-&gt;date . " / (" . substr($this-&gt;state, 0, 9) . "...)";
+    }
+
+    public function getDate(): string
+    {
+        return $this-&gt;date;
+    }
+}
+
+/**
+ * Уредникът не зависи от конкретните класове на спомена. Следователно,
+ * той няма достъп до състоянието на създателя, а може да комуникира със
+ * спомените само чрез общия им интерфейс.
+ */
+class Caretaker
+{
+    /**
+     * @var Memento[]
+     */
+    private $mementos = [];
+
+    /**
+     * @var Originator
+     */
+    private $originator;
+
+    public function __construct(Originator $originator)
+    {
+        $this-&gt;originator = $originator;
+    }
+
+    public function backup(): void
+    {
+        echo "\nCaretaker: Saving Originator's state...\n";
+        $this-&gt;mementos[] = $this-&gt;originator-&gt;save();
+    }
+
+    public function undo(): void
+    {
+        if (!count($this-&gt;mementos)) {
+            return;
+        }
+        $memento = array_pop($this-&gt;mementos);
+
+        echo "Caretaker: Restoring state to: " . $memento-&gt;getName() . "\n";
+        try {
+            $this-&gt;originator-&gt;restore($memento);
+        } catch (\Exception $e) {
+            $this-&gt;undo();
+        }
+    }
+
+    public function showHistory(): void
+    {
+        echo "Caretaker: Here's the list of mementos:\n";
+        foreach ($this-&gt;mementos as $memento) {
+            echo $memento-&gt;getName() . "\n";
+        }
+    }
+}
+
+/**
+ * Клиентски код.
+ */
+$originator = new Originator("Super-duper-super-puper-super.");
+$caretaker = new Caretaker($originator);
+
+$caretaker-&gt;backup();
+$originator-&gt;doSomething();
+
+$caretaker-&gt;backup();
+$originator-&gt;doSomething();
+
+$caretaker-&gt;backup();
+$originator-&gt;doSomething();
+
+echo "\n";
+$caretaker-&gt;showHistory();
+
+echo "\nClient: Now, let's rollback!\n\n";
+$caretaker-&gt;undo();
+
+echo "\nClient: Once more!\n\n";
+$caretaker-&gt;undo();
+
+?&gt;</code></pre>
+                        <figcaption>Код 5. Примерна имплементация на <i><strong>Спомен</strong></i> в <i>PHP</i>. <a href="#link19">[19]</a></figcaption>
+                    </figure>
+                    <p>Изпълнението на горния код би трябвало да доведе до следния изход:</p>
+                    <pre class="sample-output"><samp>Originator: My initial state is: Super-duper-super-puper-super.
+
+Caretaker: Saving Originator's state...
+Originator: I'm doing something important.
+Originator: and my state has changed to: PwLoucrbVkOXyIQUgmjRsWFEHlCeJh
+
+Caretaker: Saving Originator's state...
+Originator: I'm doing something important.
+Originator: and my state has changed to: oyuWKUwQsCGAXvxTHedMVfqgbBZShz
+
+Caretaker: Saving Originator's state...
+Originator: I'm doing something important.
+Originator: and my state has changed to: zcgxuEGBpIhwbakJHeRvtdlFqjMZPy
+
+Caretaker: Here's the list of mementos:
+2022-04-02 19:05:17 / (Super-dup...)
+2022-04-02 19:05:17 / (PwLoucrbV...)
+2022-04-02 19:05:17 / (oyuWKUwQs...)
+
+Client: Now, let's rollback!
+
+Caretaker: Restoring state to: 2022-04-02 19:05:17 / (oyuWKUwQs...)
+Originator: My state has changed to: oyuWKUwQsCGAXvxTHedMVfqgbBZShz
+
+Client: Once more!
+
+Caretaker: Restoring state to: 2022-04-02 19:05:17 / (PwLoucrbV...)
+Originator: My state has changed to: PwLoucrbVkOXyIQUgmjRsWFEHlCeJh</samp></pre>
+                </section>
             </article>
             <article>
-                <h1 id="observer" class="header-article holder-bg pattern">Наблюдател (Observer)</h1>
+                <h1 id="observer-title" class="header-article holder-bg pattern">Наблюдател (Observer)</h1>
+                <section>
+                    <h2 id="observer-problem">Казус</h2>
+                    <p>Представете си че имате два типа обекти: клиент (<code class="code-inline">Customer</code>) и магазин (<code class="code-inline">Store</code>). Клиентът е заинтересован в определена марка продукт (да речем нов модел на <i>iPhone</i>), която ще стане налична в магазина скоро.</p>
+                    <p>Клиентът може да посещава магазина всеки ден и да проверява дали продуктът е в наличност, но докато това не се случи, той ще направи няколко безсмислени разходки.</p>
+                    <figure>
+                        <img src="img/observer-01.png" alt="Visiting the store vs. sending spam"/>
+                        <figcaption>Фигура 28. Посещение на магазин срещу спам. <a href="#link10">[10]</a></figcaption>
+                    </figure>
+                    <p>От друга страна, магазинът може да изпраща множество имейли (т.е. спам) на своите клиенти при появата на всеки нов продукт. Това би им спестило пътешествието, но някои от тях ще недоволстват.</p>
+                    <p>Изглежда имаме конфликт подръка. Трябва или клиентите да си губят времето в разходи до магазина, или той да изразходва ресурси, уведомявайки грешните такива.</p>
+                </section>
+                <section>
+                    <h2 id="observer-proposal">Предложение</h2>
+                    <p>Обектът, който има някакво интересно състояние, често се нарича <i>тема</i>, но тъй като също ще уведомява други обекти относно промяната в състоянието си, ще го наречем <i><strong>издател</strong></i> (<i><strong>publisher</strong></i>). Всички други обекти, които искат да следят промените в състоянието му, ще наричаме <i><strong>абонати</strong></i> (<i><strong>subscribers</strong></i>).</p>
+                    <p>Шаблонът <i><strong>Наблюдател</strong></i> предполага добавянето на механизъм за абониране към класа на издателя, така че индивидуални обекти могат да се абонират към или да премахват абонамента си към поток от събития, произхождащи от този издател. На практика, този механизъм се състои от:</p>
+                    <ol>
+                        <li>Масив за съхранение на лист от референции към абонатите.</li>
+                        <li>Няколко публични метода, позволяващи добавяне на допълнителни абонати, както и тяхното премахване.</li>
+                    </ol>
+                    <figure>
+                        <img src="img/observer-02.png" alt="Publish-Subscribe"/>
+                        <figcaption>Фигура 29. Шаблон публикация-абонамент. <a href="#link10">[10]</a></figcaption>
+                    </figure>
+                    <p>Сега, когато се случи важно събитие при издателя, то ще достигне до абонатите му през специфичен метод за оповестяване на обектите им.</p>
+                    <p>Реални приложения може да имат множество различни абонаментни класове, които се интересуват от събития на един и същ издателски клас. Не бихте искали да свържете тясно издателя към всички тези класове. А и може да не знаете за някои от тях предварително, ако издателският ви клас трябва да се използва от други хора.</p>
+                    <p>Поради тази причина е от изключителна важност всичките абонати да имплементират същия интерфейс, по който издателят да комуникира с тях. Този интерфейс трябва да декларира метод за оповестяване заедно с някакви параметри, чрез които издателят да подава данни относно събитието.</p>
+                    <figure>
+                        <img src="img/observer-03.png" alt="Subscriber interface"/>
+                        <figcaption>Фигура 30. Общ интерфейс за всички абонати. <a href="#link10">[10]</a></figcaption>
+                    </figure>
+                    <p>Ако приложението има няколко различни типове издатели и искате абонатите ви да са съвместими с всички от тях, може да направите общ интерфейс и за самите издатели. Този интерфейс ще има нужда само от няколко методи за абонамент, които да позволят на абонатите да следят състоянията на издателите независимо.</p>
+                </section>
+                <section>
+                    <h2 id="observer-structure">Структура</h2>
+                    <figure>
+                        <img src="img/observer-04.png" alt="Observer UML diagram"/>
+                        <figcaption>Фигура 31. UML Диаграма на шаблона <i><strong>Наблюдател</strong></i>. <a href="#link10">[10]</a></figcaption>
+                    </figure>
+                    <ol>
+                        <li>Издателят (<code class="code-inline">Publisher</code>) публикува събития към други обекти. Тези събития настъпват, когато издателят си промени състоянието или извърши някаква дейност. Също така издателят поддържа инфраструктура, позволяваща добавянето и премахването на абонати.</li>
+                        <li>Когато настъпи ново събитие, издателят минава по списъка с абонати и извиква метода за уведомление, дефиниран в интерфейса им.</li>
+                        <li><code class="code-inline">Subscriber</code> декларира интерфейс за уведомление, който в повечето случаи се състои от един <code class="code-inline">update</code> метод, съдържащ един или няколко параметъра, описващи детайли относно събитието.</li>
+                        <li>Конкретните абонати (<code class="code-inline">ConcreteSubscriber</code>) извършват някаква дейност в отговор на получените от издателя уведомления. Всички тези класове трябва да имплементират същия интерфейс с цел <i>decoupling</i>.</li>
+                        <li>Клиентът (<code class="code-inline">Client</code>) създава обекти на издатели и абонати отделно и съответно ги регистрира.</li>
+                    </ol>
+                </section>
+                <section>
+                    <h2 id="observer-code-sample">Примерна имплементация</h2>
+                    <figure class="sample-code">
+                        <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
+                        <pre><code class="language-php">&lt;?php
+
+/**
+ * PHP има няколко вградени интерфейса, свързани с шаблона <i>Наблюдател</i>.
+ *
+ * Ето как изглежда интерфейса за тема (издател):
+ *
+ * @link http://php.net/manual/en/class.splsubject.php
+ *
+ *     interface SplSubject
+ *     {
+ *         // Прикачва наблюдател към темата.
+ *         public function attach(SplObserver $observer);
+ *
+ *         // Разкачва наблюдател от темата.
+ *         public function detach(SplObserver $observer);
+ *
+ *         // Уведомява всички наблюдатели относно събитие.
+ *         public function notify();
+ *     }
+ *
+ * Съществува също и вграден интерфейс за наблюдатели:
+ *
+ * @link http://php.net/manual/en/class.splobserver.php
+ *
+ *     interface SplObserver
+ *     {
+ *         public function update(SplSubject $subject);
+ *     }
+ */
+
+/**
+ * Темата (издателят) притежава няколко важни състояния и уведомява наблюдателите
+ * когато настъпят промени.
+ */
+class Subject implements \SplSubject
+{
+    /**
+     * @var int 
+     * С цел опростеност, състоянието на темата, важно за всички абонати,
+     * се съхранява в тази променлива
+     */
+    public $state;
+
+    /**
+     * @var \SplObjectStorage
+     * Списък от абонати. В реалния свят списъкът
+     * може да се съхранява по по-подходящ начин (категоризирани спрямо събитие и т.н.).
+     */
+    private $observers;
+
+    public function __construct()
+    {
+        $this-&gt;observers = new \SplObjectStorage();
+    }
+
+    /**
+     * Методи за управление на абонаментите.
+     */
+    public function attach(\SplObserver $observer): void
+    {
+        echo "Subject: Attached an observer.\n";
+        $this-&gt;observers-&gt;attach($observer);
+    }
+
+    public function detach(\SplObserver $observer): void
+    {
+        $this-&gt;observers-&gt;detach($observer);
+        echo "Subject: Detached an observer.\n";
+    }
+
+    /**
+     * Активира обновление при всеки абонат.
+     */
+    public function notify(): void
+    {
+        echo "Subject: Notifying observers...\n";
+        foreach ($this-&gt;observers as $observer) {
+            $observer-&gt;update($this);
+        }
+    }
+
+    /**
+     * Обикновено, абонаментната логика е само част от това, което издателят
+     * може да върши. Издателите, по принцип, съдържат важна бизнес логика, която
+     * извиква метод за уведомление винаги когато нещо важно е напът да се случи (или след като се случи).
+     */
+    public function someBusinessLogic(): void
+    {
+        echo "\nSubject: I'm doing something important.\n";
+        $this-&gt;state = rand(0, 10);
+
+        echo "Subject: My state has just changed to: {$this-&gt;state}\n";
+        $this-&gt;notify();
+    }
+}
+
+/**
+ * Конкретните наблюдатели реагират на ъпдейтите, публикувани от издателя,
+ * към който са били прикрепени.
+ */
+class ConcreteObserverA implements \SplObserver
+{
+    public function update(\SplSubject $subject): void
+    {
+        if ($subject-&gt;state &lt; 3) {
+            echo "ConcreteObserverA: Reacted to the event.\n";
+        }
+    }
+}
+
+class ConcreteObserverB implements \SplObserver
+{
+    public function update(\SplSubject $subject): void
+    {
+        if ($subject-&gt;state == 0 || $subject-&gt;state &gt;= 2) {
+            echo "ConcreteObserverB: Reacted to the event.\n";
+        }
+    }
+}
+
+/**
+ * Клиентският код.
+ */
+
+$subject = new Subject();
+
+$o1 = new ConcreteObserverA();
+$subject-&gt;attach($o1);
+
+$o2 = new ConcreteObserverB();
+$subject-&gt;attach($o2);
+
+$subject-&gt;someBusinessLogic();
+$subject-&gt;someBusinessLogic();
+
+$subject-&gt;detach($o2);
+
+$subject-&gt;someBusinessLogic();
+
+?&gt;</code></pre>
+                        <figcaption>Код 6. Примерна имплементация на <i><strong>Наблюдател</strong></i> в <i>PHP</i>. <a href="#link20">[20]</a></figcaption>
+                    </figure>
+                    <p>Изпълнението на горния код би трябвало да доведе до подобен изход:</p>
+                    <pre class="sample-output"><samp>Subject: Attached an observer.
+Subject: Attached an observer.
+
+Subject: I'm doing something important.
+Subject: My state has just changed to: 8
+Subject: Notifying observers...
+ConcreteObserverB: Reacted to the event.
+
+Subject: I'm doing something important.
+Subject: My state has just changed to: 8
+Subject: Notifying observers...
+ConcreteObserverB: Reacted to the event.
+Subject: Detached an observer.
+
+Subject: I'm doing something important.
+Subject: My state has just changed to: 1
+Subject: Notifying observers...
+ConcreteObserverA: Reacted to the event.
+</samp></pre>
+                </section>
             </article>
             <article>
-                <h1 id="state" class="header-article holder-bg pattern">Състояние (State)</h1>
+                <h1 id="state-title" class="header-article holder-bg pattern">Състояние (State)</h1>
+                <section>
+                    <h2 id="state-problem">Казус</h2>
+                    <p>Шаблонът <i><strong>Състояние</strong></i> е пряко свързан с идеята на крайните автомати.</p>
+                    <figure>
+                        <img src="img/state-01.png" alt="Finite-State Machine"/>
+                        <figcaption>Фигура 32. Краен автомат. <a href="#link11">[11]</a></figcaption>
+                    </figure>
+                    <p>Главната идея е, че във всеки един момент съществува <i>краен</i> брой състояния, в които може да е една програма. Във всяко отделно състояние тя се държи различно и може да си променя състоянието мигновено. В този ред на мисли, в зависимост от текущото ѝ състояние, програмата може да няма възможността да премине в определени други състояния. Тези правила, наречени <i>преходи</i>, са също краен брой и предопределени.</p>
+                    <p>Същото нещо може да се приложи и за обекти. Представете си, че имаме клас <code class="code-inline">Document</code>. Всеки документ може да се намира в едно от три състояния: <code class="code-inline">Draft</code>, <code class="code-inline">Moderation</code> и <code class="code-inline">Published</code>. Методът <code class="code-inline">publish</code> се държи по различен начин във всяко състояние:</p>
+                    <ul>
+                        <li>В <code class="code-inline">Draft</code> променя състоянието на <code class="code-inline">Moderation</code>.</li>
+                        <li>В <code class="code-inline">Moderation</code> променя състоянието на <code class="code-inline">Published</code>, стига текущият потребител да е администратор.</li>
+                        <li>В <code class="code-inline">Published</code> не прави нищо.</li>
+                    </ul>
+                    <figure>
+                        <img src="img/state-02.png" alt="Possible states and transitions of a document object"/>
+                        <figcaption>Фигура 33. Състояния и преходи на документ. <a href="#link11">[11]</a></figcaption>
+                    </figure>
+                    <p>Автоматите обикновено се имплементират с много условни оператори (<code class="code-inline">if</code> или <code class="code-inline">switch</code>), които подбират коректното поведение в зависимост от текущото състояние на обекта. По принцип, това "състояние" е просто множество от стойностите на обекта.</p>
+                    <p>Най-големият недостатък на автомат, базиран на условия, става явен, когато добавяме нови и нови състояния и поведение, зависещо от състоянията към класа <code class="code-inline">Document</code>. Повечето му методи ще съдържат чудовищни условности. Такъв код е много труден за поддръжка, защото промяна в преходната логика може да изисква промяна в условносите на всеки метод.</p>
+                    <p>Проблемът се уголемява с растежа на проекта. Трудно е да се предвидят всички възможни състояния и преходи по време на дизайна. Затова автомат с ограничено множество от условия може да се разрастне в голяма бъркотия с времето.</p>
+                </section>
+                <section>
+                    <h2 id="state-proposal">Предложение</h2>
+                    <p>Шаблонът <i><strong>Състояние</strong></i> предполага създаването на отделни класове за всяко възможно състояние на обект и извличането на специфичното за състоянието държание в тези класове.</p>
+                    <p>Вместо имплементирането на всички поведения самостоятелно, първичния обект, наречен <i>контекст</i>, съхранява референция към един от обектите състояния, който представлява неговото текущо състояние, и делегира работата, свързана със състоянията, към този обект.</p>
+                    <figure>
+                        <img src="img/state-03.png" alt="Document delegates the work to a state object"/>
+                        <figcaption>Фигура 34. Документ делегира работата към обект-състояние. <a href="#link11">[11]</a></figcaption>
+                    </figure>
+                    <p>За преминаване на контекста към друго състояние трябва да заменим активния обект-състояние с друг, обозначаващ новото такова. Това е възможно само ако всички класове-състояния имплементират същия интерфейс, а контекстът борави с тях чрез този интерфейс.</p>
+                    <p>Тази структура може да изглежда подобно на шаблона <i><strong>Стратегия</strong></i></p>, но има една съществена разлика. При <i><strong>Състояние</strong></i> отделните състояния може да знаят един за друг и да инициират преходи от едно състояние към друго, докато стратегиите почти никога не знаят за колегите си.</p>
+                </section>
+                <section>
+                    <h2 id="state-structure">Структура</h2>
+                    <figure>
+                        <img src="img/state-04.png" alt="State UML diagram"/>
+                        <figcaption>Фигура 35. UML Диаграма на шаблона <i><strong>Състояние</strong></i>. <a href="#link11">[11]</a></figcaption>
+                    </figure>
+                    <ol>
+                        <li><code class="code-inline">Context</code> съдържа референция към един от конкретните обекти състояния и делегира към него работата си свързана с тях. Контекстът комуникира с обекта състояние чрез интерфейса за състояния. Дефинира сетър за промяна на текущото състояние.</li>
+                        <li>Интерфейсът <code class="code-inline">State</code> декларира методи специфично за състоянията. Тези методи трябва да имат смисъл за всяко конкретно състояние, тъй като не искаме те да имат безсмислени методи.</li>
+                        <li>Конкретните състояния (<code class="code-inline">ConcreteStates</code>) предоставят собствена имплементация на специфичните методи. За да избегнем дупликация в отделните състояния, може да се добави междинен абстрактен в който да се енкапсулира обща логика. Обектите състояния може да държат референция към контекстния обект, чрез която може да се извлича нужна информация и да се променя състоянието му.</li>
+                        <li>И контекста, и конкретните състояния могат да променят състоянието на контекста.</li>
+                    </ol>
+                </section>
+                <section>
+                    <h2 id="-code-sample">Примерна имплементация</h2>
+                    <figure class="sample-code">
+                        <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
+                        <pre><code class="language-php">&lt;?php
+
+/**
+ * Контекстът дефинира интерфейса за клиентите. Съща така държи референция
+ * към инстанция от подклас на State, която представлява текущото му състояние.
+ */
+class Context
+{
+    /**
+     * @var State
+     * Референция към текущото състояние.
+     */
+    private $state;
+
+    public function __construct(State $state)
+    {
+        $this-&gt;transitionTo($state);
+    }
+
+    /**
+     * Контекстът позволява промяна на състоянието по време на изпълнение.
+     */
+    public function transitionTo(State $state): void
+    {
+        echo "Context: Transition to " . get_class($state) . ".\n";
+        $this-&gt;state = $state;
+        $this-&gt;state-&gt;setContext($this);
+    }
+
+    /**
+     * Контекстът делегира част от поведението си към текущия обект-състояние.
+     */
+    public function request1(): void
+    {
+        $this-&gt;state-&gt;handle1();
+    }
+
+    public function request2(): void
+    {
+        $this-&gt;state-&gt;handle2();
+    }
+}
+
+/**
+ * Базовия клас State декларира методи, които всички конкретни състояния трябва
+ * да имплементират, както и предоставя обратна референция към контекстния обект,
+ * асоцииран със състоянието. Тази референция може да се използва от състоянията
+ * за преход на контекста към друго такова.
+ */
+abstract class State
+{
+    /**
+     * @var Context
+     */
+    protected $context;
+
+    public function setContext(Context $context)
+    {
+        $this-&gt;context = $context;
+    }
+
+    abstract public function handle1(): void;
+
+    abstract public function handle2(): void;
+}
+
+/**
+ * Конкретните състояния имплементират различни поведения, асоциирани със
+ * състояние на контекста.
+ */
+class ConcreteStateA extends State
+{
+    public function handle1(): void
+    {
+        echo "ConcreteStateA handles request1.\n";
+        echo "ConcreteStateA wants to change the state of the context.\n";
+        $this-&gt;context-&gt;transitionTo(new ConcreteStateB());
+    }
+
+    public function handle2(): void
+    {
+        echo "ConcreteStateA handles request2.\n";
+    }
+}
+
+class ConcreteStateB extends State
+{
+    public function handle1(): void
+    {
+        echo "ConcreteStateB handles request1.\n";
+    }
+
+    public function handle2(): void
+    {
+        echo "ConcreteStateB handles request2.\n";
+        echo "ConcreteStateB wants to change the state of the context.\n";
+        $this-&gt;context-&gt;transitionTo(new ConcreteStateA());
+    }
+}
+
+/**
+ * Клиентският код.
+ */
+$context = new Context(new ConcreteStateA());
+$context-&gt;request1();
+$context-&gt;request2();
+
+?&gt;</code></pre>
+                        <figcaption>Код 7. Примерна имплементация на <i><strong>Състояние</strong></i> в <i>PHP</i>. <a href="#link11">[11]</a></figcaption>
+                    </figure>
+                    <p>Изпълнението на горния код би трябвало да доведе до подобен изход:</p>
+                    <pre class="sample-output"><samp>Context: Transition to ConcreteStateA.
+ConcreteStateA handles request1.
+ConcreteStateA wants to change the state of the context.
+Context: Transition to ConcreteStateB.
+ConcreteStateB handles request2.
+ConcreteStateB wants to change the state of the context.
+Context: Transition to ConcreteStateA.</samp></pre>
+                </section>
             </article>
             <article>
-                <h1 id="strategy" class="header-article holder-bg pattern">Стратегия (Strategy)</h1>
+                <h1 id="strategy-title" class="header-article holder-bg pattern">Стратегия (Strategy)</h1>
             </article>
             <article>
-                <h1 id="template-method" class="header-article holder-bg pattern">Шаблонен метод (Template Method)</h1>
+                <h1 id="template-method-title" class="header-article holder-bg pattern">Шаблонен метод (Template Method)</h1>
             </article>
             <article>
-                <h1 id="visitor" class="header-article holder-bg pattern">Посетител (Visitor)</h1>
+                <h1 id="visitor-title" class="header-article holder-bg pattern">Посетител (Visitor)</h1>
             </article>
             <article>
                 <h1 id="conclusion" class="header-article holder-bg">Заключение</h1>

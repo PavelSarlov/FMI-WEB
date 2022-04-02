@@ -31,6 +31,12 @@ code, .sample-output {
     padding: 1em;
 }
 
+.sample-output, figure {
+    position: relative;
+    margin: auto;
+    width: 100%;
+}
+
 figcaption {
     text-align: center;
     color: #5A5A5A;
@@ -195,8 +201,10 @@ aside {
 }
 
 .copy-to-clipboard {
-    position: relative;
-    float: right;
+    position: absolute;
+    font-size: 1em;
+    top: 0.5em;
+    right: 0.5em;
 }
 
 .code-inline {
