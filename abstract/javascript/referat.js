@@ -16,19 +16,33 @@ window.onload = () => {
         }
     });
 
-    document.getElementById("toc-indicator").addEventListener("click", (event) => {
+    document.getElementById("toc-indicator").addEventListener("change", (event) => {
         let container = document.getElementById("toc-container");
-        let indic = document.getElementById("toc-indicator");
+        let indic = event.target;
+        let indicSpan = indic.nextElementSibling;
+        let indicWrapper = indic.parentElement;
 
-        if (indic.innerHTML == "&gt;&gt;") {
-            indic.innerHTML = "&lt;&lt;";
+        if (indic.checked) {
+            indicSpan.innerHTML = "&lt;&lt;";
+            indicWrapper.style.transform = "translateX(0%)"; 
             container.style.transform = "translateY(-50%)"; 
         }
         else {
-            console.log(indic.innerHTML);
-            indic.innerHTML = "&gt;&gt;";
-            container.style.transform = "translateY(-50%) translateX(-92%)"; 
+            indicSpan.innerHTML = "&gt;&gt;";
+            indicWrapper.style.transform = "translateX(100%)"; 
+            container.style.transform = "translateY(-50%) translateX(-100%)"; 
         }
+    });
+
+    document.getElementById("to-top-btn").addEventListener("click", (event) => {
+        const scrollToTop = () => {
+            const c = document.documentElement.scrollTop || document.body.scrollTop;
+            if (c > 0) {
+                window.requestAnimationFrame(scrollToTop);
+                window.scrollTo(0, c - c / 8);
+            }
+        };
+        scrollToTop();
     });
 
     function handlePageScroll() {

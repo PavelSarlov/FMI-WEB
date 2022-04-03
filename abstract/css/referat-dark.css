@@ -2,17 +2,13 @@ body {
     background: #323232;
 }
 
-article {
-    color: #ffffff;
-}
-
-figcaption {
+article, figcaption {
     color: #dddddd;
 }
 
 .code-inline {
     background-color: #7e7e7e;
-    color: #fff;
+    color: #FFC745;
 }
 
 code, .sample-output {
@@ -25,4 +21,8 @@ a {
 
 img {
     background-color: #dcdcdc;
+}
+
+#to-top-btn, .left-side-borders {
+    border-color: #aaaa
 }

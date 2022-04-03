@@ -4,15 +4,14 @@ body {
     font-family: Arial;
     text-align: center;
     color: #cccccc;
-    overflow-y: auto;
+    overflow: auto;
     -webkit-text-size-adjust: auto;
 }
 
 article {
     width: 60%;
     margin: auto;
-    /* font-size: 1.1vmax; */
-    font-size: 14pt;
+    font-size: 1.2rem;
     color: #000000;
     text-align: justify;
 }
@@ -29,6 +28,7 @@ code, .sample-output {
     border: 0.1em solid #000000;
     background: #efecf4;
     padding: 1em;
+    overflow-x: auto;
 }
 
 .sample-output, figure {
@@ -62,15 +62,14 @@ a {
 
 header {
     display: block;
-    font-size: 4vmax;
+    font-size: 4rem;
     margin: auto;
     padding: 1em;
 }
 
 h1 {
     display: block;
-    font-size: 2vmax;
-    /* font-size: 32; */
+    font-size: 2.5rem;
     margin: 1em auto;
     padding: 0.5em;
     color: #cccccc;
@@ -79,8 +78,7 @@ h1 {
 
 h2 {
     display: block;
-    /* font-size: 2vmax; */
-    font-size: 32;
+    font-size: 2rem;
     margin: 1em auto;
 }
 
@@ -94,37 +92,20 @@ aside {
     flex-direction: row;
     align-items: center;
     z-index: 1;
-    transform: translateY(-50%) translateX(-92%);
+    transform: translateY(-50%) translateX(-100%);
     transition: transform 0.3s;
-    font-size: 1vmax;
+    font-size: 1rem;
 }
 
-#toc {
-    width: 92%;
-    max-height: 50vh;
-    overflow-y: auto;
-    border-top: 0.3em solid #000000;
-    border-bottom: 0.3em solid #000000;
-    border-right: 0.3em solid #000000;
+.left-side-borders {
+    border-style: solid;
+    border-color: #000;
+    border-width: 0.2em;
+    border-left: 0;
 }
-
-#toc-indicator {
-    width: 8%;
-    height: fit-content;
-    font-size: inherit;
-    border: 0;
-}
-
-/* .toc-container:hover > #toc { */
-/*     transform: translateY(-50%); */
-/* } */
-
-/* .toc-container:hover > #toc-indicator { */
-/*     visibility: hidden; */
-/* } */
 
 .toc-h1, .toc-h2 {
-    font-size: 1vmax;
+    font-size: 1rem;
     text-decoration: none;
     text-align: left;
     overflow-wrap: break-word;
@@ -157,14 +138,13 @@ aside {
     height: fit-content;
     width: fit-content;
     top: 80%;
-    left: 94%;
+    right: 5%;
     z-index: 1;
-    font-size: 4vmax;
+    font-size: 4em;
     visibility: hidden;
     border: 0.1em solid;
     border-color: #000000;
     border-radius: 2em;
-    text-decoration: none;
 }
 
 .holder-bg {
@@ -202,7 +182,7 @@ aside {
 
 .copy-to-clipboard {
     position: absolute;
-    font-size: 1em;
+    font-size: 2vmin;
     top: 0.5em;
     right: 0.5em;
 }
@@ -211,6 +191,7 @@ aside {
     padding: 0 0.5em;
     border: 0;
     background: #c4c4c4;
+    color: #a31155;
     border-radius: 1em;
     font-style: italic;
     font-weight: bold;
@@ -220,13 +201,13 @@ kbd {
     padding: 0 0.2em;
 }
 
-.switch {
+#view-switch-wrapper {
     position: fixed;
     top: 10%;
-    left: 94%;
+    right: 5%;
     width: 2.5em;
     height: 1.5em;
-    font-size: 1vmax;
+    font-size: 1.5em;
 }
 
 .switch input {
@@ -288,4 +269,22 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+#toc {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+#toc-indicator-wrapper {
+    position: relative;
+    transform: translateX(100%);
+    transition: transform .3s;
+    width: 1em;
+}
+
+#toc-indicator + span {
+    position: absolute;
+    left: 0;
+    width: 100%;
 }
