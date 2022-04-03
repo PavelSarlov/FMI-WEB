@@ -26,7 +26,7 @@
                 </label>
                 <!-- <button id="toc-indicator" class="nav-btn left-side-borders"></button> -->
             </aside>
-            <button id="to-top-btn" class="nav-btn">&#x2B06;</a>
+            <button id="to-top-btn" class="nav-btn">&#x2B06;</button>
         </nav>
         <main>
             <header class="holder-bg">
@@ -910,7 +910,7 @@ Component 2 does C.</samp></pre>
                     </section>
                 </section>
                 <section>
-                    <h2 id="-code-sample">Примерна имплементация</h2>
+                    <h2 id="memento-code-sample">Примерна имплементация</h2>
                     <figure class="sample-code">
                         <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
                         <pre><code class="language-php">&lt;?php
@@ -1387,7 +1387,7 @@ ConcreteObserverA: Reacted to the event.
                         <figcaption>Фигура 34. Документ делегира работата към обект-състояние. <a href="#link11">[11]</a></figcaption>
                     </figure>
                     <p>За преминаване на контекста към друго състояние трябва да заменим активния обект-състояние с друг, обозначаващ новото такова. Това е възможно само ако всички класове-състояния имплементират същия интерфейс, а контекстът борави с тях чрез този интерфейс.</p>
-                    <p>Тази структура може да изглежда подобно на шаблона <i><strong>Стратегия</strong></i></p>, но има една съществена разлика. При <i><strong>Състояние</strong></i> отделните състояния може да знаят един за друг и да инициират преходи от едно състояние към друго, докато стратегиите почти никога не знаят за колегите си.</p>
+                    <p>Тази структура може да изглежда подобно на шаблона <i><strong>Стратегия</strong></i>, но има една съществена разлика. При <i><strong>Състояние</strong></i> отделните състояния може да знаят един за друг и да инициират преходи от едно състояние към друго, докато стратегиите почти никога не знаят за колегите си.</p>
                 </section>
                 <section>
                     <h2 id="state-structure">Структура</h2>
@@ -1403,7 +1403,7 @@ ConcreteObserverA: Reacted to the event.
                     </ol>
                 </section>
                 <section>
-                    <h2 id="-code-sample">Примерна имплементация</h2>
+                    <h2 id="state-code-sample">Примерна имплементация</h2>
                     <figure class="sample-code">
                         <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
                         <pre><code class="language-php">&lt;?php
@@ -1570,7 +1570,7 @@ Context: Transition to ConcreteStateA.</samp></pre>
                     </ol>
                 </section>
                 <section>
-                    <h2 id="-code-sample">Примерна имплементация</h2>
+                    <h2 id="strategy-code-sample">Примерна имплементация</h2>
                     <figure class="sample-code">
                         <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
                         <pre><code class="language-php">&lt;?php
@@ -1682,9 +1682,9 @@ e,d,c,b,a</samp></pre>
                 </section>
             </article>
             <article>
-                <h1 id="template-method-title" class="header-article holder-bg pattern">Шаблонен метод (Template Method)</h1>
+                <h1 id="tm-title" class="header-article holder-bg pattern">Шаблонен метод (Template Method)</h1>
                 <section>
-                    <h2 id="template-method-problem">Казус</h2>
+                    <h2 id="tm-problem">Казус</h2>
                     <p>Представете си, че създавате приложение за копане на данни, което анализира корпоративни документи. Потребителите подават на приложението документи в най-различни формати (<i>PDF</i>, <i>DOC</i>, <i>CSV</i>) и то се опитва да извлече смислени данни от тях в единен формат.</p>
                     <p>Първата версия на приложението е можела да работи само с <i>DOC</i> файлове. Следващата - да поддържа и <i>CSV</i> файлове. Месец по-късно го "обучавате" да извлича данни и от <i>PDF</i>.</p>
                     <figure>
@@ -1695,7 +1695,7 @@ e,d,c,b,a</samp></pre>
                     <p>Съществуваше обаче и друг проблем, свързан с клиентския код, използващ тези класове. При него има прекалено много условности за избиране на подходящата дейност, в зависимост от класа на обработващия обект. Ако трите класа имаха общ интерфейс, бихте могли да избегнете условностите и да използвате полиморфизъм при извикването на методите за обработка.</p>
                 </section>
                 <section>
-                    <h2 id="template-method-proposal">Предложение</h2>
+                    <h2 id="tm-proposal">Предложение</h2>
                     <p><i><strong>Шаблонният метод</strong></i> предполага разбиването на алгоритъма на стъпки, всяка от които да се обособи в отделен метод, и извикването на тези стъпки в единен <i><strong>шаблонен метод</strong></i>. Стъпките могат да бъдат абстрактни или да имплементиран нещо по подразбиране. За използванен на алгоритъма клиентът трябва да предостави собствен подклас, да имплементира всички абстрактни стъпки и да предефинира някои от тези по избор при нужда (но не и самия шаблонен метод).</p>
                     <p>Нека да видим как това ще се отрази на нашето приложение за копане на данни. Можем да създаден базов клас за трите анализиращи алгоритъма. Този клас дефинира шаблонен метод, съдържащ поредица от извиквания към различни стъпки за документообработка.</p>
                     <figure>
@@ -1712,7 +1712,7 @@ e,d,c,b,a</samp></pre>
                     <p>Съществува и друг тип стъпки, наречени <i>куки</i> (<i>hooks</i>. Те за незадължителни стъпки с празно тяло. Шаблонен метод би сработил дори и да не е предефинирана кука. По принцип, те се поставят преди и след важни стъпки в алгоритмите, предоставяйки на подкласовете разширителни точки към алгоритмите.</p>
                 </section>
                 <section>
-                    <h2 id="template-method-structure">Структура</h2>
+                    <h2 id="tm-structure">Структура</h2>
                     <figure>
                         <img src="img/tm-03.png" alt="Template Method UML diagram"/>
                         <figcaption>Фигура 41. UML Диаграма на шаблона <i><strong>Шаблонен метод</strong></i>. <a href="#link14">[13]</a></figcaption>
@@ -1723,7 +1723,7 @@ e,d,c,b,a</samp></pre>
                     </ol>
                 </section>
                 <section>
-                    <h2 id="-code-sample">Примерна имплементация</h2>
+                    <h2 id="tm-code-sample">Примерна имплементация</h2>
                     <figure class="sample-code">
                         <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
                         <pre><code class="language-php">&lt;?php
@@ -1944,7 +1944,7 @@ class Industry is
                     </ol>
                 </section>
                 <section>
-                    <h2 id="-code-sample">Примерна имплементация</h2>
+                    <h2 id="visitor-code-sample">Примерна имплементация</h2>
                     <figure class="sample-code">
                         <button class="nav-btn copy-to-clipboard" title="Copy to Clipboard">Copy</button>
                         <pre><code class="language-php">&lt;?php
