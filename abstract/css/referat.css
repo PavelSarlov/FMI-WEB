@@ -299,10 +299,22 @@ input:checked + .slider:before {
     padding: 0 2em;
 }
 
-.fa-plus {
+.pros-cons-ul {
+    list-style-type: none;
+}
+
+.pros-cons-ul li:before {
+    font-size: 1.5em;
+    margin-left: -1em;
+    margin-right: 0.5em;
+}
+
+.pros-ul li:before {
+    content: "+";
     color: #00aa00;
 }
 
-.fa-minus {
+.cons-ul li:before {
+    content: "−";
     color: #aa0000;
 }
