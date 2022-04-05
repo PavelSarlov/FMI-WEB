@@ -5,7 +5,6 @@ body {
     text-align: center;
     color: #cccccc;
     overflow: auto;
-    -webkit-text-size-adjust: auto;
 }
 
 article {
@@ -287,4 +286,23 @@ input:checked + .slider:before {
     position: absolute;
     left: 0;
     width: 100%;
+}
+
+.pros-cons {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.pros-cons-col {
+    width: 50%;
+    padding: 0 2em;
+}
+
+.fa-plus {
+    color: #00aa00;
+}
+
+.fa-minus {
+    color: #aa0000;
 }
