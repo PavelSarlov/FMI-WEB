@@ -123,7 +123,24 @@ window.onload = () => {
     Array.from(document.getElementsByClassName("copy-to-clipboard"))
         .forEach(e => {
             e.addEventListener("click", () => {
-                navigator.clipboard.writeText(e.nextElementSibling.textContent);
+                let textToCopy = e.nextElementSibling.textContent;
+
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(textToCopy);
+                } 
+                else {
+                    let textArea = document.createElement("textarea");
+                    textArea.value = textToCopy;
+                    textArea.style.position = "fixed";
+                    textArea.style.left = "-999999px";
+                    textArea.style.top = "-999999px";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    document.execCommand('copy');
+                    textArea.remove();
+                }
+
                 e.innerHTML = "Copied!";
             });
         });
