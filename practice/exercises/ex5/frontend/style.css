@@ -1,0 +1,10 @@
+#login-form, section {
+    margin: auto;
+    width: fit-content;
+}
+
+.form-item input {
+    display: block;
+    width: auto;
+    max-width: 100%;
+}
