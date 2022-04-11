@@ -1,27 +1,37 @@
 <?php
 
+include "db.php";
+
 $db = new Db();
 
-if ($_POST['username'] && $_POST['password']) {
+$json = file_get_contents('php://input');
+$data = json_decode($json);
+
+if ($data->{"username"} && $data->{"password"}) {
+    $username = $data->{"username"};
+    $password_hash = hash('sha256', $data->{"password"});
 
     try {
-
         $con = $db->getConnection();
-        $sql = "INSERT INTO users(username, password)
-                    VALUES(:username, :password)";
+        $sql = "SELECT * FROM user
+                    WHERE username = :username AND password = :password";
         $args = [
-            'username'=>$_POST['username'],
-            'password'=>$_POST['password']
+            'username'=>$username,
+            'password'=>$password_hash
         ];
-        $res = $con->prepare($sql)->execute($args);
+        $stmt = $con->prepare($sql);
+        $stmt->execute($args);
+        $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        if ($res > 0) {
+            while($row = $stmt->fetch()) {
+                echo implode(" ", $row);
+            }
+        }
     }
     catch (PDOException $e) {
         echo $e->getMessage();
     }
-}
-
-if ($_GET['username']) {
-
 }
 
 ?>

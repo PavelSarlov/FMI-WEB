@@ -16,9 +16,9 @@ window.onload = () => {
                 password: document.getElementById("password").value
             })
         })
-        .then(resp => resp.json())
+        .then(resp => resp.text())
         .then(msg => {
-            listItem.innerHTML = msg.user;
+            listItem.innerHTML = msg;
             list.appendChild(listItem);
         });
     });
