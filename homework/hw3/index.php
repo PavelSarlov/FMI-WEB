@@ -1,4 +1,5 @@
 <?php
+
 include "FormValidator.php";
 
 $data = json_decode(file_get_contents("php://input"));
@@ -27,6 +28,6 @@ if (count($result["errors"]) == 0) {
 }
 
 header('Content-Type: application/json');
-echo json_encode($result);
+echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
 ?>
