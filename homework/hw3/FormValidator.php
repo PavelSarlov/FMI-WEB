@@ -1,70 +1,92 @@
 <?php
 
+require "FormValidatorResult.php";
+
 class FormValidator {
-    public static function validateName($data) {
-        if (!property_exists($data, "name")) {
-            return "Името на курса е задължително поле!";
+    private $result;
+
+    public function __construct() {
+        $this->result = new FormValidatorResult();
+    }
+
+    public function getResult() {
+        return $this->result;
+    }
+
+    public function validateName($data) {
+        $prop = "name";
+
+        if (!property_exists($data, $prop)) {
+            $this->result->addError($prop, "Името на курса е задължително поле");
+            return;
         }
 
-        $len = mb_strlen($data->{"name"}, "UTF-8");
+        $len = mb_strlen($data->{$prop}, "UTF-8");
         $min = 2;
         $max = 150;
         if ($len < $min || $len > $max) {
-            return "Името на курса трябва да е между {$min} и {$max} символа включително, а вие сте въвели {$len}!";
+            $this->result->addError($prop, "Името на курса трябва да е между {$min} и {$max} символа включително, а вие сте въвели {$len}");
         }
-        return null;
     }
 
-    public static function validateTeacher($data) {
-        if (!property_exists($data, "teacher")) {
-            return "Името на преподавателя е задължително поле!";
+    public function validateTeacher($data) {
+        $prop = "teacher";
+
+        if (!property_exists($data, $prop)) {
+            $this->result->addError($prop, "Името на преподавателя е задължително поле");
+            return;
         }
 
-        $len = mb_strlen($data->{"teacher"}, "UTF-8");
+        $len = mb_strlen($data->{$prop}, "UTF-8");
         $min = 3;
         $max = 200;
         if ($len < $min || $len > $max) {
-            return "Името на преподавателя трябва да е между {$min} и {$max} символа включително, а вие сте въвели {$len}!";
+            $this->result->addError($prop, "Името на преподавателя трябва да е между {$min} и {$max} символа включително, а вие сте въвели {$len}");
         }
-        return null;
     }
 
-    public static function validateDescription($data) {
-        if (!property_exists($data, "description")) {
-            return "Описанието на курса е задължително поле!";
+    public function validateDescription($data) {
+        $prop = "description";
+
+        if (!property_exists($data, $prop)) {
+            $this->result->addError($prop, "Описанието на курса е задължително поле");
+            return;
         }
 
-        $len = mb_strlen($data->{"description"}, "UTF-8");
+        $len = mb_strlen($data->{$prop}, "UTF-8");
         $min = 10;
         if ($len < $min) {
-            return "Описанието на курса трябва да е поне {$min}, а вие сте въвели {$len}!";
+            $this->result->addError($prop, "Описанието на курса трябва да е поне {$min}, а вие сте въвели {$len}");
         }
-        return null;
     }
 
-    public static function validateGroup($data) {
-        if (!property_exists($data, "group")) {
-            return "Групата е задължително поле!";
+    public function validateGroup($data) {
+        $prop = "group";
+
+        if (!property_exists($data, $prop)) {
+            $this->result->addError($prop, "Групата е задължително поле");
+            return;
         }
 
         $options = ["М", "ПМ", "ЯКН", "ОКН"];
         $_ = implode(", ", $options);
-        if (!in_array($data->{"group"}, $options)) {
-            return "Невалидна група, изберете една от {$_}!";
+        if (!in_array($data->{$prop}, $options)) {
+            $this->result->addError($prop, "Невалидна група, изберете една от {$_}");
         }
-        return null;
     }
 
-    public static function validateCredits($data) {
-        if (!property_exists($data, "credits")) {
-            return "Кредитите са задължително поле!";
+    public function validateCredits($data) {
+        $prop = "credits";
+
+        if (!property_exists($data, $prop)) {
+            $this->result->addError($prop, "Кредитите са задължително поле");
+            return;
         }
 
-        $cred = $data->{"credits"};
+        $cred = $data->{$prop};
         if ($cred <= 0) {
-            return "Кредитите трябва да са цяло положително число, а вие сте въвели {$cred}!";
+            $this->result->addError($prop, "Кредитите трябва да са цяло положително число, а вие сте въвели {$cred}");
         }
-        return null;
     }
 }
 

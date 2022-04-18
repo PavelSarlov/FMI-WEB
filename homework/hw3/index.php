@@ -1,33 +1,20 @@
 <?php
 
-include "FormValidator.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require "FormValidator.php";
 
-$data = json_decode(file_get_contents("php://input"));
+    $data = json_decode(file_get_contents("php://input"));
 
-$result = ["success"=>false, "errors"=>[]];
+    $validator = new FormValidator();
 
-if($valid = FormValidator::validateName($data)) {
-    $result["errors"]["name"] = $valid; 
-}
-if($valid = FormValidator::validateTeacher($data)) {
-    $result["errors"]["teacher"] = $valid; 
-}
-if($valid = FormValidator::validateDescription($data)) {
-    $result["errors"]["description"] = $valid; 
-}
-if($valid = FormValidator::validateGroup($data)) {
-    $result["errors"]["group"] = $valid; 
-}
-if($valid = FormValidator::validateCredits($data)) {
-    $result["errors"]["credits"] = $valid; 
-}
+    $validator->validateName($data);
+    $validator->validateTeacher($data);
+    $validator->validateDescription($data);
+    $validator->validateGroup($data);
+    $validator->validateCredits($data);
 
-if (count($result["errors"]) == 0) {
-    unset($result["errors"]);
-    $result["success"] = true;
+    header('Content-Type: application/json');
+    echo $validator->getResult()->toJson();
 }
-
-header('Content-Type: application/json');
-echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
 ?>
