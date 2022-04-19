@@ -84,7 +84,7 @@ class FormValidator {
         }
 
         $cred = $data->{$prop};
-        if ($cred <= 0) {
+        if (filter_var($cred, FILTER_VALIDATE_INT) === false || $cred <= 0) {
             $this->result->addError($prop, "Кредитите трябва да са цяло положително число, а вие сте въвели {$cred}");
         }
     }
