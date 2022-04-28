@@ -1,0 +1,32 @@
+main {
+    display: flex;
+    flex-direction: column;
+    vertical-align: center;
+}
+
+body, .form-item button {
+    margin: auto;
+    width: fit-content;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid #000;
+    background-color: #aaa;
+    padding: 1em;
+    margin-top: 5em;
+    width: 100%;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0;
+}
+
+.form-item input, .form-item label {
+    width: auto;
+    max-width: 100%;
+}
