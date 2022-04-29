@@ -1,24 +1,18 @@
 <?php
 
 class Response {
-    private $status_code;
-    private $msg;
+    public $statusCode;
+    public $message;
 
-    public function __construct($status_code, $msg) {
-        $this->status_code = $status_code;
-        $this->msg = $msg;
-    }
-
-    public function getStatusCode() {
-        return $this->status_code;
-    }
-
-    public function getMsg() {
-        return $this->msg;
+    public function __construct($statusCode, $message) {
+        $this->statusCode = $statusCode;
+        $this->message = $message;
     }
 
     public function toJson() {
-        return json_encode($this, JSON_UNESCAPED_UNICODE);
+        http_response_code($this->statusCode);
+        header("Content-Type: application/json");
+        return json_encode($this, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 }
 

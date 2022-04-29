@@ -1,12 +1,16 @@
-main {
-    display: flex;
-    flex-direction: column;
-    vertical-align: center;
+* {
+    box-sizing: border-box;
 }
 
-body, .form-item button {
-    margin: auto;
-    width: fit-content;
+html, body, main {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: center;
+    justify-content: center;
+    margin: 0;
 }
 
 form {
@@ -14,10 +18,22 @@ form {
     flex-direction: column;
     justify-content: center;
     border: 2px solid #000;
+    border-radius: 1em;
     background-color: #aaa;
     padding: 1em;
-    margin-top: 5em;
-    width: 100%;
+    width: fit-content;
+    height: fit-content;
+}
+
+label {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.form-item button {
+    margin: auto;
+    width: fit-content;
+    padding: 0.5em;
 }
 
 .form-item {
@@ -29,4 +45,32 @@ form {
 .form-item input, .form-item label {
     width: auto;
     max-width: 100%;
+}
+
+#password-msg {
+    visibility: hidden;
+}
+
+.warning-msg li {
+    list-style-type: none;
+}
+
+.valid {
+    color: green;
+}
+
+.valid:before {
+    position: relative;
+    left: -0.5em;
+    content: "✔";
+}
+
+.invalid {
+    color: red;
+}
+
+.invalid:before {
+    position: relative;
+    left: -0.5em;
+    content: "✖";
 }

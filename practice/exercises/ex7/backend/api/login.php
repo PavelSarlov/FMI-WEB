@@ -15,19 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-    try {
-        UserRepo::createUser($data['email'], $data['password']);
-        $response = new Response(200, "Registration successful");
-        echo $response->toJson();
-        exit();
-    } catch(Exception $e) {
-        switch($e->getCode()) {
-            case 23000:
-                $response = new Response(409, "User with such email already exists");
-                break;
-            default:
-                $response = new Response(500, "Something went wrong");
-        }
+    if ($user = UserRepo::getByEmail($data['email'])) {
+        $response = new Response(302, json_encode($user, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)); 
         echo $response->toJson();
         exit();
     }

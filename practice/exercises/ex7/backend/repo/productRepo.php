@@ -1,6 +1,6 @@
 <?php
 
-require_once("db.php");
+require_once "../db/db.php";
 
 class ProductRepo {
     public static function getAll() {
@@ -9,7 +9,7 @@ class ProductRepo {
         $sql = "SELECT * FROM products";
         $stmt = $con->prepare($sql);
         $stmt->execute();
-        $res = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
         return $stmt->fetchAll();
     }
