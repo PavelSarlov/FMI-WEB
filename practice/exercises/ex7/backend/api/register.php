@@ -18,9 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         UserRepo::createUser($data['email'], $data['password']);
         $response = new Response(200, "Registration successful");
-        echo $response->toJson();
-        exit();
-    } catch(Exception $e) {
+    } 
+    catch(Exception $e) {
         switch($e->getCode()) {
             case 23000:
                 $response = new Response(409, "User with such email already exists");
@@ -28,9 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             default:
                 $response = new Response(500, "Something went wrong");
         }
-        echo $response->toJson();
-        exit();
     }
+
+    echo $response->toJson();
+    exit();
 }
 else {
     $response = new Response(400, "Invalid request");

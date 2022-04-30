@@ -16,10 +16,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ($user = UserRepo::getByEmail($data['email'])) {
-        $response = new Response(302, json_encode($user, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)); 
-        echo $response->toJson();
-        exit();
+        if (!password_verify($data['password'], $user['password'])) {
+            $response = new Response(401, "Invalid password");
+            echo $response->toJson();
+            exit();
+        }
+
+        session_start();
+
+        $_SESSION['user'] = $user['id'];
+        $response = new Response(302, $_SESSION['user']);
     }
+    else {
+        $response = new Response(404, "User with such email doesn't exist");
+    }
+
+    echo $response->toJson();
+    exit();
 }
 else {
     $response = new Response(400, "Invalid request");

@@ -18,6 +18,10 @@ class Validator {
             preg_match("/[[:lower:]]/", $password) &&
             preg_match("/\d/", $password);
     }
+
+    public static function isSignedIn() {
+        return isset($_SESSION['user']);
+    }
 }
 
 ?>

@@ -10,7 +10,7 @@ CREATE TABLE user_roles (
 CREATE TABLE users (
     id VARCHAR(36) PRIMARY KEY DEFAULT UUID(),
     email VARCHAR(36) UNIQUE NOT NULL,
-    password VARCHAR(64) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     role VARCHAR(20) DEFAULT 'customer',
     CONSTRAINT role_fk FOREIGN KEY(role) REFERENCES user_roles(name) ON DELETE NO ACTION
 );
@@ -44,7 +44,7 @@ VALUES("admin"),
 ("customer");
 
 INSERT INTO users(id, email, password, role)
-VALUES(@userID, "admin@a.bg", "$2y$10$ipWoiRqTDwXUh5K5DCW5re1N2bbMgGRM3x.Qq5EaUGK/gX4.NZlYm", "admin");
+VALUES(@userID, "admin@a.bg", "$2y$10$7nah1/Iz/xEV2L8eOAq9ZuqNSU8P4w0cF/i5o.V8VBdD0rHiiyn4G", "admin");
 
 INSERT INTO product_types(name)
 VALUES

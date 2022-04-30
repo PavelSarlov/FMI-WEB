@@ -2,6 +2,16 @@ window.onload = () => {
     let url = window.location.href.split('/');
 
     (() => {
+        fetch("../../backend/api/auth.php", { 'method': "GET" })
+            .then(resp => resp.json())
+            .then(msg => {
+                if (msg.statusCode == 302) {
+                    window.location.assign("../products/products.html");
+                }
+            });
+    })();
+
+    (() => {
         console.log(document.cookie);
     })();
 
@@ -31,7 +41,7 @@ window.onload = () => {
                 .then(resp => resp.json())
                 .then(msg => {
                     if (msg.statusCode >= 200 && msg.statusCode < 300) {
-                        window.location.assign("../login/login.html");
+                        window.location.assign("./login.html");
                     }
                     else {
                         alert(msg.message);
@@ -113,7 +123,7 @@ window.onload = () => {
             })
                 .then(resp => resp.json())
                 .then(msg => {
-                    if (msg.statusCode >= 200 && msg.statusCode < 300) {
+                    if (msg.statusCode == 302) {
                         window.location.assign("../products/products.html");
                     }
                     else {
