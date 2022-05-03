@@ -23,6 +23,6 @@ img {
     background-color: #dcdcdc;
 }
 
-#to-top-btn, .left-side-borders {
-    border-color: #aaaa
+.nav-btn, .dropdown-field-wrapper > .dropdown-btn-toggle, .toc-h1, .toc-h2, *::-webkit-scrollbar-thumb {
+    border-color: #aaa;
 }

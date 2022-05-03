@@ -3,6 +3,8 @@ window.onload = () => {
     populateTOC();
     populatePatternsList();
 
+    let tocInd = document.getElementById("toc-indicator");
+
     document.getElementById("view-switch").addEventListener("change", (event) => {
         let ss = document.getElementById("dark-mode-css");
         let hss = document.getElementById("dark-highlight-css");
@@ -13,24 +15,6 @@ window.onload = () => {
         else {
             ss.disabled = true;
             hss.disabled = true;
-        }
-    });
-
-    document.getElementById("toc-indicator").addEventListener("change", (event) => {
-        let container = document.getElementById("toc-container");
-        let indic = event.target;
-        let indicSpan = indic.nextElementSibling;
-        let indicWrapper = indic.parentElement;
-
-        if (indic.checked) {
-            indicSpan.innerHTML = "&lt;&lt;";
-            indicWrapper.style.transform = "translateX(0%)"; 
-            container.style.transform = "translateY(-50%)"; 
-        }
-        else {
-            indicSpan.innerHTML = "&gt;&gt;";
-            indicWrapper.style.transform = "translateX(100%)"; 
-            container.style.transform = "translateY(-50%) translateX(-100%)"; 
         }
     });
 
@@ -144,4 +128,26 @@ window.onload = () => {
                 e.innerHTML = "Copied!";
             });
         });
+
+    document.getElementById("toc-indicator").addEventListener("change", (event) => {
+        let container = document.getElementById("toc-container");
+        let indic = event.target;
+        let indicSpan = indic.nextElementSibling;
+        let indicWrapper = indic.parentElement;
+
+        if (indic.checked) {
+            indicSpan.innerHTML = "&lt;&lt;";
+            indicWrapper.style.transform = "translateX(0%)"; 
+            container.style.transform = "translateY(-50%)"; 
+        }
+        else {
+            indicSpan.innerHTML = "&gt;&gt;";
+            indicWrapper.style.transform = "translateX(100%)"; 
+            container.style.transform = "translateY(-50%) translateX(-100%)"; 
+        }
+    });
+
+
+    tocInd.checked = true;
+    tocInd.dispatchEvent(new Event("change", {bubbles: true}));
 }
