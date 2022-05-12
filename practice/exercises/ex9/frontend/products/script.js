@@ -1,4 +1,22 @@
+
+export function redirectTo(to) {
+    window.location.replace(to);
+}
+
+export function mapButtons() {
+    document.getElementById("btn-logout").addEventListener("click", (event) => {
+        fetch("../../backend/api/logout.php")
+            .then(() => redirectTo("../auth/login.html"));
+    });
+
+    document.getElementById("btn-admin-panel").addEventListener("click", (event) => {
+        redirectTo("../admin/admin-panel.html");
+    });
+}
+
 window.onload = () => {
+    mapButtons();
+
     let prodList = document.getElementById("product-list");
 
     let getProducts = (user) => {
@@ -15,8 +33,6 @@ window.onload = () => {
             });
     };
 
-    let redirectToLogin = () => window.location.replace("../auth/login.html");
-
     (() => {
         fetch("../../backend/api/authenticate.php")
             .then(resp => resp.json())
@@ -25,16 +41,9 @@ window.onload = () => {
                     getProducts(msg.message);
                 }
                 else if (msg.statusCode == 401) {
-                    redirectToLogin();
+                    redirectTo("../auth/login.html");
                 }
             });
     })();
 
-    document.getElementById("btn-logout").addEventListener("click", (event) => {
-        fetch("../../backend/api/logout.php")
-            .then(() => redirectToLogin());
-    });
-
-    document.getElementById("btn-admin-panel").addEventListener("click", (event) => {
-    });
 };

@@ -13,7 +13,7 @@ CREATE TABLE users (
     email VARCHAR(36) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role INT DEFAULT 2,
-    CONSTRAINT role_fk FOREIGN KEY(role) REFERENCES user_roles(id) ON DELETE NO ACTION
+    CONSTRAINT role_fk FOREIGN KEY(role) REFERENCES user_roles(id) ON DELETE SET NULL
 );
 
 CREATE TABLE product_types(

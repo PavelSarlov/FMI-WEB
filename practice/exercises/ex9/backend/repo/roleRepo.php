@@ -3,6 +3,22 @@
 require_once "../db/db.php";
 
 class ReloRepo {
+    public static function getById($id) {
+        $db = new Db();
+        $con = $db->getConnection();
+        $sql = "SELECT * FROM user_roles\n" .
+            "WHERE id = :id";
+        $args = [
+            'id'=>$id
+        ];
+        $stmt = $con->prepare($sql);
+        $stmt->execute($args);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $stmt->fetch();
+
+    }
+
     public static function getAll() {
         $db = new Db();
         $con = $db->getConnection();

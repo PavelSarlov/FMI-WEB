@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -14,10 +14,19 @@
             <button id="btn-logout">Logout</button>
         </nav>
         <main>
-            <section>
-                <ol id="product-list">
-                </ol>
-            </section>
+            <form>
+                <section>
+                    <label for="product-name">Product name:</label>
+                    <input id="product-name" type="text">
+                </section>
+                <section>
+                    <label for="product-type"></label>
+                    <select id="product-type">
+                    </select>
+                </section>
+                <button id="btn-add-product">Add product</button>
+            </form>
         </main>
     </body>
 </html>
+

@@ -38,7 +38,7 @@ class ProductRepo {
         $stmt->execute($args);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-        return $stmt->fetchOne();
+        return $stmt->fetch();
     }
 
     public static function createProduct($name, $type) {
@@ -54,6 +54,15 @@ class ProductRepo {
         $res = $stmt->execute($args);
 
         return $res;
+    }
+
+    public static function getProductTypes() {
+        $db = new Db();
+        $con = $db->getConnection();
+        $sql = "SELECT * FROM product_types";
+        $res = $con->query($sql);
+
+        return $res->fetchAll();
     }
 }
 

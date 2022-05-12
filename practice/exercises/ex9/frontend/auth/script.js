@@ -2,7 +2,7 @@ window.onload = () => {
     let url = window.location.href.split('/');
 
     (() => {
-        fetch("../../backend/api/auth.php", { 'method': "GET" })
+        fetch("../../backend/api/authenticate.php", { 'method': "GET" })
             .then(resp => resp.json())
             .then(msg => {
                 if (msg.statusCode == 302) {

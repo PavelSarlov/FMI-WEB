@@ -18,6 +18,22 @@ class UserRepo {
         return $stmt->fetch();
     }
 
+    public static function getById($id) {
+        $db = new Db();
+        $con = $db->getConnection();
+        $sql = "SELECT * FROM users
+                    WHERE id = :id";
+        $args = [
+            'id'=>$id,
+        ];
+        $stmt = $con->prepare($sql);
+        $stmt->execute($args);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $stmt->fetch();
+    }
+
+
     public static function createUser($email, $password) {
         $db = new Db();
         $con = $db->getConnection();
@@ -31,6 +47,22 @@ class UserRepo {
         $res = $stmt->execute($args);
 
         return $res;
+    }
+
+    public static function getUserRole($id) {
+        $db = new Db();
+        $con = $db->getConnection();
+        $sql = "SELECT r.name FROM users u\n" .
+            "JOIN user_roles r ON r.id = u.role\n" .
+            "WHERE u.id = :id";
+        $args = [
+            'id'=>$id,
+        ];
+        $stmt = $con->prepare($sql);
+        $stmt->execute($args);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $stmt->fetch();
     }
 }
 
