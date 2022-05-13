@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     switch(login($data)) {
         case LoginStatus::SUCCESS:
-            $response = new Response(302, $_SESSION['user']);
+            $response = new Response(302, "Login successful");
             break;
         case LoginStatus::WRONG_EMAIL:
             $response = new Response(404, "User with such email doesn't exist");

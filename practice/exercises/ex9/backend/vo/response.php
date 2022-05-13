@@ -2,11 +2,13 @@
 
 class Response {
     public $statusCode;
-    public $message;
+    public $body;
+    public $timestamp;
 
-    public function __construct($statusCode, $message) {
+    public function __construct($statusCode, $body) {
         $this->statusCode = $statusCode;
-        $this->message = $message;
+        $this->body = $body;
+        $this->timestamp = date(DATE_ATOM);
     }
 
     public function toJson() {

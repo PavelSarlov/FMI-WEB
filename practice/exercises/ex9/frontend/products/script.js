@@ -1,49 +1,31 @@
-
-export function redirectTo(to) {
-    window.location.replace(to);
-}
-
-export function mapButtons() {
-    document.getElementById("btn-logout").addEventListener("click", (event) => {
-        fetch("../../backend/api/logout.php")
-            .then(() => redirectTo("../auth/login.html"));
-    });
-
-    document.getElementById("btn-admin-panel").addEventListener("click", (event) => {
-        redirectTo("../admin/admin-panel.html");
-    });
-}
+import * as utils from "../utils.js";
 
 window.onload = () => {
-    mapButtons();
+    utils.authenticate();
+    utils.mapButtons();
 
-    let prodList = document.getElementById("product-list");
+    document.getElementById("btn-user-products").addEventListener("click", () => {
+        utils.clearProductsList();
+        utils.getUserProducts();
+    });
 
-    let getProducts = (user) => {
-        fetch("../../backend/api/products.php", { 'method': "GET" })
-            .then(resp => resp.json())
-            .then(msg => {
-                if (msg.statusCode == 302) {
-                    for(let prod of msg.message) {
-                        let li = document.createElement("li");
-                        li.innerHTML = prod.name;
-                        prodList.appendChild(li)
-                    }
-                }
-            });
-    };
+    document.getElementById("btn-all-products").addEventListener("click", () => {
+        utils.clearProductsList();
+        utils.getAllProducts();
+    });
 
-    (() => {
-        fetch("../../backend/api/authenticate.php")
-            .then(resp => resp.json())
-            .then(msg => {
-                if (msg.statusCode == 302) {
-                    getProducts(msg.message);
-                }
-                else if (msg.statusCode == 401) {
-                    redirectTo("../auth/login.html");
-                }
-            });
-    })();
+    fetch("../../backend/api/authorize.php")
+        .then(resp => resp.json())
+        .then(msg => {
+            let nav = document.getElementsByTagName("nav")[0];
+            if (msg.statusCode == 403) {
+                nav.removeChild(document.getElementById("btn-admin-panel"));
+            }
+            else {
+                nav.removeChild(document.getElementById("btn-all-products"));
+                nav.removeChild(document.getElementById("btn-user-products"));
+            }
+        });
 
+    utils.getAllProducts();
 };

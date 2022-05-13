@@ -1,3 +1,5 @@
+import * as utils from "../utils.js";
+
 window.onload = () => {
     let url = window.location.href.split('/');
 
@@ -6,7 +8,8 @@ window.onload = () => {
             .then(resp => resp.json())
             .then(msg => {
                 if (msg.statusCode == 302) {
-                    window.location.assign("../products/products.html");
+                    // utils.redirectTo("../products/products.html");
+                    alert(msg.location);
                 }
             });
     })();
@@ -36,11 +39,9 @@ window.onload = () => {
             })
                 .then(resp => resp.json())
                 .then(msg => {
+                    alert(msg.body);
                     if (msg.statusCode >= 200 && msg.statusCode < 300) {
-                        window.location.assign("./login.html");
-                    }
-                    else {
-                        alert(msg.message);
+                        utils.redirectTo("./login.html");
                     }
                 });
         });
@@ -119,11 +120,9 @@ window.onload = () => {
             })
                 .then(resp => resp.json())
                 .then(msg => {
+                    alert(msg.body);
                     if (msg.statusCode == 302) {
-                        window.location.assign("../products/products.html");
-                    }
-                    else {
-                        alert(msg.message);
+                        utils.redirectTo("../products/products.html");
                     }
                 });
         });

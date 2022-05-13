@@ -1,20 +1,12 @@
-import * as utils from "../products/script.js";
+import * as utils from "../utils.js";
 
 window.onload = () => {
+    utils.authorize();
     utils.mapButtons();
 
-    fetch("../../backend/api/authorize.php")
-        .then(resp => resp.json())
-        .then(msg => {
-            if (msg.statusCode == 403) {
-                console.log(msg);
-                alert("You have no access to this page");
-                utils.redirectTo("../products/products.html");
-            }
-            else if (msg.statusCode == 401) {
-                utils.redirectTo("../auth/login.html");
-            }
-        });
+    document.getElementById("btn-admin-panel").addEventListener("click", () => {
+        utils.redirectTo("../admin/admin-panel.html");
+    });
 
     fetch("../../backend/api/product_types.php")
         .then(resp => resp.json())
