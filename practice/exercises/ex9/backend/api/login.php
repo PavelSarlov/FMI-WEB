@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     switch(login($data)) {
         case LoginStatus::SUCCESS:
-            $response = new Response(302, "Login successful");
+            $response = new Response(302, UserRepo::getById($_SESSION['user']));
             break;
         case LoginStatus::WRONG_EMAIL:
             $response = new Response(404, "User with such email doesn't exist");

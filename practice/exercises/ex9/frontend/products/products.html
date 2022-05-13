@@ -2,21 +2,24 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <!-- <link rel="stylesheet" href="style.css"> -->
+        <link rel="stylesheet" href="style.css">
         <script src="script.js" type="module" defer></script>
         <title>Products</title>
     </head>
     <body>
         <nav>
-            <button id="btn-all-products">All products</button>
-            <button id="btn-user-products">My products</button>
-            <button id="btn-admin-panel">Admin panel</button>
-            <button id="btn-logout">Logout</button>
+            <button class="nav-btn" id="btn-all-products">All products</button>
+            <button class="nav-btn" id="btn-user-products">My products</button>
+            <button class="nav-btn" id="btn-logout">Logout</button>
         </nav>
         <main>
             <section>
-                <ol id="product-list">
-                </ol>
+                <table id="product-list" cellspacing="3" cellpadding="3">
+                    <thead>
+                        <th>Name</th>
+                        <th>Type</th>
+                    </thead>
+                </table>
             </section>
         </main>
     </body>

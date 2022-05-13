@@ -39,9 +39,11 @@ window.onload = () => {
             })
                 .then(resp => resp.json())
                 .then(msg => {
-                    alert(msg.body);
                     if (msg.statusCode >= 200 && msg.statusCode < 300) {
                         utils.redirectTo("./login.html");
+                    }
+                    else {
+                        alert(msg.body);
                     }
                 });
         });
@@ -120,9 +122,11 @@ window.onload = () => {
             })
                 .then(resp => resp.json())
                 .then(msg => {
-                    alert(msg.body);
                     if (msg.statusCode == 302) {
                         utils.redirectTo("../products/products.html");
+                    }
+                    else {
+                        alert(msg.body);
                     }
                 });
         });

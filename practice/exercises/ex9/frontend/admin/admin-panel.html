@@ -1,30 +1,46 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <!-- <link rel="stylesheet" href="style.css"> -->
-        <script src="script.js" type="module" defer></script>
-        <title>Products</title>
-    </head>
-    <body>
-        <nav>
-            <button id="btn-admin-panel">Admin panel</button>
-            <button id="btn-logout">Logout</button>
-        </nav>
-        <main>
-            <form>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" type="module" defer></script>
+    <title>Products</title>
+</head>
+
+<body>
+    <nav>
+        <button class="nav-btn" id="btn-admin-panel">Admin panel</button>
+        <button class="nav-btn" id="btn-logout">Logout</button>
+    </nav>
+    <main>
+        <article>
+            <section class="tab-nav">
+                <button class="tab tab-selected" name="create">Create</button>
+                <button class="tab" name="delete">Delete</button>
+            </section>
+            <form id="form-create">
                 <section>
                     <label for="product-name">Product name:</label>
                     <input id="product-name" type="text">
                 </section>
                 <section>
-                    <label for="product-type"></label>
+                    <label for="product-type">Product type:</label>
                     <select id="product-type">
                     </select>
                 </section>
-                <button id="btn-add-product">Add product</button>
+                <button class="nav-btn" id="btn-add-product">Add product</button>
             </form>
-        </main>
-    </body>
-</html>
+            <form id="form-delete">
+                <header>Products</header>
+                <section>
+                    <ul id="product-list">
+                    </ul>
+                </section>
+                <button class="nav-btn" id="btn-delete-product">Delete selected</button>
+            </form>
+        </article>
+    </main>
+</body>
 
+</html>

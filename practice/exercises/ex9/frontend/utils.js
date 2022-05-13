@@ -17,18 +17,14 @@ export function authorize() {
         });
 }
 
-export function getAllProducts() {
-    fetch("../../backend/api/products.php")
+export async function getAllProducts() {
+    return fetch("../../backend/api/products.php")
         .then(resp => resp.json())
         .then(msg => {
             if (msg.statusCode == 302) {
-                for(let prod of msg.body) {
-                    let prodList = document.getElementById("product-list");
-                    let li = document.createElement("li");
-                    li.innerHTML = prod.name;
-                    prodList.appendChild(li)
-                }
+                return msg.body;
             }
+            return null;
         });
 }
 
@@ -74,3 +70,13 @@ export function authenticate() {
         });
 }
 
+export async function getProductTypes() {
+    return fetch("../../backend/api/product_types.php")
+        .then(resp => resp.json())
+        .then(msg => {
+            if (msg.statusCode >= 200 && msg.statusCode < 400) {
+                return msg.body;
+            }
+            return null;
+        });
+}
