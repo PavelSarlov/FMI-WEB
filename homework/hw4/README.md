@@ -31,7 +31,7 @@
 
 Накрая предайте архив с име във формат HW_JS_[FN_FirstName_LastName].zip (без скобите), който да съдържа всички необходими файлове на http://checkhw.w3c.fmi.uni-sofia.bg/upload.html
 
-http://checkhw.w3c.fmi.uni-sofia.bg/js1/upload.html
+~~http://checkhw.w3c.fmi.uni-sofia.bg/js1/upload.html~~
 
 
 п.п.1. Ако сайта не работи, ни пишете.
