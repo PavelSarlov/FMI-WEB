@@ -1,0 +1,200 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 2vmin;
+}
+
+body, main {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background-color: #ccd;
+    overflow-y: auto;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border: 0.2rem solid;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: auto;
+    width: fit-content;
+}
+
+header {
+    margin-bottom: 1em;
+    font-family: Impact;
+    font-size: 2rem;
+}
+
+fieldset {
+    display: flex;
+    flex-grow: 1;
+    padding: 0;
+    margin: 0.5rem;
+    background-color: #fff;
+}
+
+#user-data {
+    grid-area: user-data;
+}
+
+#names {
+    grid-area: names;
+}
+
+#address {
+    grid-area: address;
+}
+
+.field-grid {
+    border: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "user-data names"
+        "user-data blank"
+        "address address";
+}
+
+input {
+    height: fit-content;
+    font-size: 1rem;
+    color: #000;
+    border: 0.1rem solid #ccc;
+    border-radius: 1rem;
+}
+
+input:invalid {
+    border-color: #f00;
+}
+
+input:invalid + label {
+    color: #f00;
+}
+
+input:required + label:after, input.required + label:after {
+    content: "*";
+    color: #f00;
+}
+
+input, input + label {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    border-radius: inherit;
+    outline: none;
+    padding: 0.5rem;
+    background-color: transparent;
+}
+
+input + label {
+    position: absolute;
+    top: 0.2em;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+input:focus {
+    border-color: #00f;
+} 
+
+input:focus + label {
+    color: #00f;
+}
+
+input:focus + label, input:not(:placeholder-shown) + label {
+    transition: 0.3s;
+    transform: scale(0.8) translateY(-1rem);
+    opacity: 1;
+    background-color: #fff;
+    padding: 0 0.2rem;
+}
+
+.field-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.field-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+button {
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    font-family: Impact;
+    font-size: 1rem;
+    align-self: center;
+    width: fit-content;
+    cursor: pointer;
+}
+
+button:hover {
+    -webkit-filter: invert();
+    filter: invert();
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 0.5rem;
+    position: relative;
+    height: fit-content;
+}
+
+.alert {
+    align-self: flex-start;
+    margin: 0.5em;
+    border-radius: 0.5rem;
+    padding: 0.3em;
+    color: #fff;
+    animation: pop-up 1s normal ease-in-out;
+}
+
+.error {
+    background-color: #a00;
+}
+.error::before {
+    content: "⚠ ";
+}
+
+.success {
+    background-color: #0a0;
+}
+
+@keyframes pop-up {
+    0% { font-size: 0; opacity: 0; }
+    100% { font-size: 1rem; opacity: 1; }
+}
+
+@media screen and (max-width: 960px) {
+    form {
+        width: 70%;
+    }
+
+    .field-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "user-data"
+            "names"
+            "address";
+    }
+}

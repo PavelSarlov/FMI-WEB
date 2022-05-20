@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Registration</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <form id="registration-form">
+            <header>РЕГИСТРАЦИЯ</header>
+            <fieldset class="field-grid">
+                <fieldset id="user-data" class="field-column">
+                    <legend>Потребителски данни</legend>
+                    <div class="form-field">
+                        <input id="username" class="required" type="text" placeholder=" ">
+                        <label for="username">Потребителско име</label>
+                    </div>
+                    <div class="form-field">
+                        <input id="email" class="required" type="text" placeholder=" ">
+                        <label for="email">Имейл</label>
+                    </div>
+                    <div class="form-field">
+                        <input id="password" class="required" type="password" placeholder=" ">
+                        <label for="password">Парола</label>
+                    </div>
+                </fieldset>
+                <fieldset id="names" class="field-column">
+                    <legend>Имена</legend>
+                    <div class="form-field field-column">
+                        <input id="name" class="required" type="text" placeholder=" ">
+                        <label for="name">Име</label>
+                    </div>
+                    <div class="form-field field-column">
+                        <input id="family-name" class="required" type="text" placeholder=" ">
+                        <label for="family-name">Фамилия</label>
+                    </div>
+                </fieldset>
+                <fieldset id="address" class="field-column">
+                    <legend>Адрес</legend>
+                    <div class="form-field">
+                        <input id="street" type="text" placeholder=" ">
+                        <label for="street">Улица</label>
+                    </div>
+                    <div class="form-field">
+                        <input id="city" type="text" placeholder=" ">
+                        <label for="city">Град</label>
+                    </div>
+                    <div class="form-field">
+                        <input id="postal-code" type="text" placeholder=" ">
+                        <label for="postal-code">Пощенски код</label>
+                    </div>
+                </fieldset>
+            </fieldset>
+            <button id="register-btn" type="submit">Регистрирай ме!</button>
+        </form>
+    </main>
+</body>
+
+</html>
