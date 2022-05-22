@@ -3,7 +3,7 @@
 }
 
 html {
-    font-size: 2vmin;
+    font-family: Arial;
 }
 
 body, main {
@@ -31,6 +31,7 @@ form {
     padding: 1rem;
     margin: auto;
     width: fit-content;
+    max-width: 50%;
 }
 
 header {
@@ -42,31 +43,17 @@ header {
 fieldset {
     display: flex;
     flex-grow: 1;
-    padding: 0;
+    padding: 1rem;
     margin: 0.5rem;
     background-color: #fff;
 }
 
-#user-data {
-    grid-area: user-data;
-}
-
-#names {
-    grid-area: names;
-}
-
-#address {
-    grid-area: address;
-}
-
-.field-grid {
+.field-container {
     border: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-        "user-data names"
-        "user-data blank"
-        "address address";
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    justify-content: space-evenly;
 }
 
 input {
@@ -93,7 +80,6 @@ input:required + label:after, input.required + label:after {
 input, input + label {
     position: relative;
     display: flex;
-    flex-grow: 1;
     border-radius: inherit;
     outline: none;
     padding: 0.5rem;
@@ -102,7 +88,6 @@ input, input + label {
 
 input + label {
     position: absolute;
-    top: 0.2em;
     pointer-events: none;
     opacity: 0.5;
 }
@@ -117,7 +102,7 @@ input:focus + label {
 
 input:focus + label, input:not(:placeholder-shown) + label {
     transition: 0.3s;
-    transform: scale(0.8) translateY(-1rem);
+    transform: scale(0.8) translateY(-80%);
     opacity: 1;
     background-color: #fff;
     padding: 0 0.2rem;
@@ -133,7 +118,7 @@ input:focus + label, input:not(:placeholder-shown) + label {
 .field-column {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 }
 
 button {
@@ -146,7 +131,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+button:hover, button:focus {
     -webkit-filter: invert();
     filter: invert();
 }
@@ -154,19 +139,20 @@ button:hover {
 .form-field {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     margin: 0.5rem;
     position: relative;
     height: fit-content;
 }
 
 .alert {
-    align-self: flex-start;
+    text-align: left;
+    align-self: center;
     margin: 0.5em;
     border-radius: 0.5rem;
     padding: 0.3em;
     color: #fff;
     animation: pop-up 1s normal ease-in-out;
+    overflow-wrap: normal;
 }
 
 .error {
@@ -180,6 +166,10 @@ button:hover {
     background-color: #0a0;
 }
 
+a {
+    color: #00f;
+}
+
 @keyframes pop-up {
     0% { font-size: 0; opacity: 0; }
     100% { font-size: 1rem; opacity: 1; }
@@ -187,14 +177,6 @@ button:hover {
 
 @media screen and (max-width: 960px) {
     form {
-        width: 70%;
-    }
-
-    .field-grid {
-        grid-template-columns: 1fr;
-        grid-template-areas: 
-            "user-data"
-            "names"
-            "address";
+        max-width: 80%;
     }
 }
