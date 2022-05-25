@@ -17,6 +17,7 @@ window.onload = async () => {
             a.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             a.innerHTML = "Вход";
             alert.appendChild(a);
+            alert.id = "success";
         }
 
         parent.append(alert);
