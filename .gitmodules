@@ -1,0 +1,3 @@
+[submodule "project/Closed-Communication-System"]
+	path = project/Closed-Communication-System
+	url = git@github.com:MiroslavDionisiev/Closed-Communication-System.git
