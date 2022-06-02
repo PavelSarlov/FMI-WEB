@@ -40,6 +40,6 @@ VALUES
   (UUID(), @student1, @chat_room, CURRENT_TIMESTAMP, TRUE);
 
 INSERT INTO
-  messages(userId, chatRoomId, content)
+  messages(userId, chatRoomId, content, isDisabled)
 VALUES
-  (@student1, @chat_room, "Veni Vidi Vici");
+  (@student1, @chat_room, "Veni Vidi Vici", TRUE);
