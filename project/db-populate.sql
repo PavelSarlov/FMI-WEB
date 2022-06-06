@@ -14,9 +14,9 @@ SET
 INSERT INTO
   users
 VALUES
-  (@student1, "student1", "student1@fmi.bg", PASSWORD("student1"), "USER"),
-  (@student2, "student2", "student2@fmi.bg", PASSWORD("student2"), "USER"),
-  (@teacher, "teacher", "teacher@fmi.bg", PASSWORD("teacher"), "ADMIN");
+  (@student1, "student1", "student1@fmi.bg", "$2y$10$YlaZpxZFz0ZF.BA8w59Hj.n/teGfiKPnbi4lUejqZNVLdWU8QlJwO", "USER", "Student"),
+  (@student2, "student2", "student2@fmi.bg", "$2y$10$Fc3my1/Jms2YeWx4o88oFu2NOmh5hb4/YOBqKTZ.oLAyuoaFZH.U6", "USER", "Student"),
+  (@teacher, "teacher", "teacher@fmi.bg", "$2y$10$fjlex0bGsR0/JGGWDvYhbufR4NU3myAYer6J7q0578C3AzWOq0P.2", "ADMIN", "Teacher");
 
 INSERT INTO
   students
@@ -30,7 +30,7 @@ VALUES
   (@teacher);
 
 INSERT INTO
-  chat_rooms(id, name)
+  chat_rooms(chatRoomId, chatRoomName)
 VALUES
   (@chat_room, "chatroom");
 
@@ -40,6 +40,6 @@ VALUES
   (UUID(), @student1, @chat_room, CURRENT_TIMESTAMP, TRUE);
 
 INSERT INTO
-  messages(userId, chatRoomId, content, isDisabled)
+  messages(userId, chatRoomId, messageContent, messageIsDisabled)
 VALUES
   (@student1, @chat_room, "Veni Vidi Vici", TRUE);
